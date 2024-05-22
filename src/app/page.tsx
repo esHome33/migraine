@@ -1,5 +1,6 @@
 import { Button, Card, CardActions, CardContent, IconButton, Tooltip, Typography } from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
         </CardContent>
         <CardActions>
           <Button size="small" className="bg-orange-600 text-white mx-auto hover:bg-orange-300 hover:text-orange-900">
-            Go
+            <Link href={"/calendar"}>Calendriers</Link>
           </Button>
         </CardActions>
       </Card>
@@ -40,7 +41,7 @@ export default function Home() {
         </CardContent>
         <CardActions>
           <Button size="small" className="bg-orange-600 text-white mx-auto  hover:bg-orange-300 hover:text-orange-900">
-            Saisie
+            <Link href={"suivi"}>Saisie</Link>
           </Button>
         </CardActions>
       </Card>
