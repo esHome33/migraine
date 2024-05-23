@@ -36,9 +36,17 @@ export type Contenu = {
 };
 
 export type Traitements = {
+	tt1: Traitement;
+	tt2: Traitement;
+	tt3: Traitement;
+	tt4: Traitement;
+};
+
+export type Traitement = {
 	id: number;
 	nom: string;
-}[];
+	valide: boolean;
+};
 
 export function trouveMois(une_date: Date): MOIS {
 	const m = une_date.getMonth();
@@ -93,10 +101,10 @@ export function dummyContent(): Contenu {
 }
 
 export function dummyTraitement(): Traitements {
-    return [
-			{ id: 1, nom: "trt 1" },
-			{ id: 2, nom: "trt 2" },
-			{ id: 3, nom: "trt 3" },
-			{ id: 4, nom: "trt 4" },
-		];
+	return {
+		tt1: { id: 1, nom: "", valide: false },
+		tt2: { id: 2, nom: "", valide: false },
+		tt3: { id: 3, nom: "", valide: false },
+		tt4: { id: 4, nom: "", valide: false },
+	};
 }

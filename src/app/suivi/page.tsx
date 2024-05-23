@@ -25,15 +25,17 @@ const SuiviPage = () => {
   }, [])
 
 
-  const creeLocalStorage = (contenu: Contenu, traitement: Traitements) => {
-    window.localStorage.setItem(CLE_ID, CurrentVersion);
-    window.localStorage.setItem(CLE_CONTENU, JSON.stringify(contenu));
-    window.localStorage.setItem(CLE_TRAITEMENTS, JSON.stringify(traitement));
+  const creeLocalStorage = (_contenu: Contenu, _traitement: Traitements) => {
+    // window.localStorage.setItem(CLE_ID, CurrentVersion);
+    // window.localStorage.setItem(CLE_CONTENU, JSON.stringify(contenu));
+    // window.localStorage.setItem(CLE_TRAITEMENTS, JSON.stringify(traitement));
+
+    console.error("===> CREATION NON IMPLEMENTEE");
   }
 
 
 
-  if (!noTraitements) {
+  if (noTraitements) {
     return (
       <div className="max-w-lg mx-auto flex flex-col space-y-4 ">
         <Alert severity="error">
