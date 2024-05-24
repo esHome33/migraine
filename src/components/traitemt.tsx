@@ -1,32 +1,47 @@
 'use client';
 
+import { Traitement } from '@/lib/types';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 type Props = {
-    nom: string;
-    num: number;
-    qte: number;
-    enregistreur: (numero: number, check: boolean, quantite: number) => void;
+    traitement: Traitement;
+    enregistreur: (numero: number, check: boolean, quantite: number | "") => void;
 }
 
 const Traitem = (props: Props) => {
 
+    const validation_parent = props.enregistreur;
+    const myTrt = props.traitement;
+    const nom_traitement = myTrt.nom;
+    const my_num = myTrt.id;
     const [check, setCheck] = useState<boolean>(false);
-    const [qte, setQte] = useState<number>(0);
+    const [qte, setQte] = useState<number | "">(0);
 
     const checker = () => {
         setCheck(!check);
-        props.enregistreur(props.num, !check, qte);
+        if (check) {
+            validation_parent(my_num, !check, 0);
+        } else {
+            validation_parent(my_num, !check, qte);
+        }
     }
 
     const chg_qte = (val: string) => {
         const valeur = Number.parseInt(val);
         if (!Number.isNaN(valeur)) {
             setQte(valeur);
-            props.enregistreur(props.num, check, valeur);
+            props.enregistreur(my_num, check, valeur);
+        } else {
+            if (val === "") {
+                setQte("");
+            }
         }
     }
+
+    useEffect(() => {
+        validation_parent(my_num, check, qte);
+    }, []);
 
     return (
         <div className='flex flex-row sm:flex-col justify-start align-middle'>
@@ -37,7 +52,7 @@ const Traitem = (props: Props) => {
                         onChange={() => checker()}
                     />
                 }
-                label={props.nom}
+                label={nom_traitement}
             />
             {check ?
                 <TextField

@@ -14,10 +14,12 @@ type Props = {
 
 const SaisieTexte = (props: Props) => {
 
+    const validation_parent = props.valide;
+
     const id = props.num;
-    let myvalid: boolean =false;
+    let myvalid: boolean = false;
     let myname: string = "";
-    if (props.traitement) {   
+    if (props.traitement) {
         if (id === 1) {
             myvalid = props.traitement.tt1.valide;
             myname = props.traitement.tt1.nom;
@@ -43,12 +45,29 @@ const SaisieTexte = (props: Props) => {
 
     const change = () => {
         setTtvalid(!ttvalid);
-        props.valide(ttname, !ttvalid, mynumber);
+        validation_parent(ttname, !ttvalid, mynumber);
     }
 
     useEffect(() => {
-        props.valide(ttname, ttvalid, mynumber);
+        validation_parent(ttname, ttvalid, mynumber);
     }, []);
+
+    const maj_nom = (e: any) => {
+        e.preventDefault();
+        const txt = e.target.value;
+        setTtname(txt);
+
+        if (txt !== "" && !ttvalid) {
+            setTtvalid(!ttvalid);
+            validation_parent(ttname, !ttvalid, mynumber);
+        } else if (txt === "" && !ttvalid) { 
+            setTtvalid(!ttvalid);
+            validation_parent(ttname, !ttvalid, mynumber);
+        }
+        else {
+            validation_parent(ttname, ttvalid, mynumber);
+        }
+    }
 
     return (
         <div className='flex flex-row'>
@@ -59,7 +78,7 @@ const SaisieTexte = (props: Props) => {
                     variant='outlined'
                     color='error'
                     value={ttname}
-                    onChange={(e) => { e.preventDefault(); setTtname(e.target.value) }}
+                    onChange={maj_nom}
                 />
             </div>
             <IconButton

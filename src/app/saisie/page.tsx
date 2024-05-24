@@ -1,10 +1,11 @@
 'use client'
 import SaisieTexte from '@/components/saisietexte'
-import { CLE_TRAITEMENTS, dummyTraitement, Traitement, Traitements } from '@/lib/types'
+import { CLE_TRAITEMENTS, Traitement, Traitements } from '@/lib/types'
 import { Alert, Button, ButtonGroup, Typography } from '@mui/material'
 import WarningIcon from '@mui/icons-material/Warning';
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { dummyTraitements } from '@/lib/utils';
 
 const PageSaisieTraitement = () => {
 
@@ -30,39 +31,23 @@ const PageSaisieTraitement = () => {
     useEffect(() => {
         const t = window.localStorage.getItem(CLE_TRAITEMENTS);
         if (t) {
-            console.log('INIT avec JSON récupéré');
             const tt: Traitements = JSON.parse(t);
-            console.log('tt', tt);
             setTts(tt);
         } else {
-            const tt: Traitements = dummyTraitement();
+            const tt: Traitements = dummyTraitements();
             setTts(tt);
         }
     }, []);
 
     const valideTraitement = (traitement_name: string, isvalidated: boolean, numero: number) => {
+
+        if (traitement_name === "" && isvalidated) {
+            setError(true);
+            return;
+        }
+
         const tt: Traitement = { id: numero, nom: traitement_name, valide: isvalidated };
-        if (!tts) {
-            // const new_tts: Traitements = {
-            //     tt1: { id: 1, nom: "", valide: false },
-            //     tt2: { id: 2, nom: "", valide: false },
-            //     tt3: { id: 3, nom: "", valide: false },
-            //     tt4: { id: 4, nom: "", valide: false },
-            // };
-            // if (numero === 1) {
-            //     new_tts.tt1 = tt;
-            // } else if (numero === 2) {
-            //     new_tts.tt2 = tt;
-            // } else if (numero === 3) {
-            //     new_tts.tt3 = tt;
-            // } else if (numero === 4) {
-            //     new_tts.tt4 = tt;
-            // }
-            // const v = isValid(new_tts);
-            // setError(!v);
-            // setTts(new_tts);
-            // console.log('tts créé');
-        } else {
+        if (tts) {
             const new_tts = tts;
             if (numero === 1) {
                 new_tts.tt1 = tt;
@@ -76,7 +61,6 @@ const PageSaisieTraitement = () => {
             setTts(new_tts);
             const v = isValid(new_tts);
             setError(!v);
-            console.log('MAJ tts ');
         }
     }
 
