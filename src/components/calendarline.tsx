@@ -9,7 +9,8 @@ type Props = {
 const CalendarLine = (props: Props) => {
     const content = props.ligne;
 
-
+    const regles = content.regles ?
+        <FormControlLabel control={<Checkbox defaultChecked />} label="Règles" /> : null;
 
     const ceph = content.cephalee ?
         <FormControlLabel control={<Checkbox defaultChecked />} label="Céphalée" /> : null;
@@ -40,7 +41,7 @@ const CalendarLine = (props: Props) => {
                         {content.date} - {content.mois} - impact {impact}
                     </div>
                     <div className='flex flex-row'>
-                        {ceph} {nuit} {aura} {postdrome} {prodrome}
+                        {ceph} {nuit} { regles} {aura} {postdrome} {prodrome}
                     </div>
                 </div>
             </ListItem>
