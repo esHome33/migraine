@@ -20,10 +20,13 @@ const PageSaisieTraitement = () => {
         const v4 = t.tt4.valide && t.tt4.nom.length > 0;
         return (v1 || v2 || v3 || v4);
     }
+    
+    const router = useRouter();
 
     const go_valid = () => {
         if (tts && isValid(tts)) {
             window.localStorage.setItem(CLE_TRAITEMENTS, JSON.stringify(tts));
+            router.replace("/");
         }
     }
 
@@ -38,7 +41,7 @@ const PageSaisieTraitement = () => {
             setTts(tt);
         }
     }, []);
-
+    
     const valideTraitement = (traitement_name: string, isvalidated: boolean, numero: number) => {
 
         if (traitement_name === "" && isvalidated) {
@@ -64,7 +67,6 @@ const PageSaisieTraitement = () => {
         }
     }
 
-    const router = useRouter();
     const retourMaison = () => {
         router.replace("/");
     }

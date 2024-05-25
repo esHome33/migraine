@@ -35,7 +35,7 @@ const CalendarLine = (props: Props) => {
 
     return (
         <>
-            <ListItem className='rounded-md border-blue-400 border'>
+            <ListItem className='rounded-md border-blue-400 border' >
                 <div className='flex flex-col'>
                     <div className='flex flex-row'>
                         {content.date} - {content.mois} - impact {impact}

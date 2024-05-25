@@ -5,6 +5,7 @@ import { CLE_CONTENU, CLE_TRAITEMENTS, Contenu, Traitements } from "@/lib/types"
 import { ajouteContenu } from "@/lib/utils";
 import { Alert, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -39,13 +40,15 @@ const SuiviPage = () => {
     }
   }, [])
 
+  const router = useRouter();
 
   const enregistreData = (e: any) => {
     if (touched) {
       if (contenu) {
         ajouteContenu(contenu);
         toast.success("ENREGISTREMENT FAIT !", { icon: '👍' });
-        console.log('contenu', contenu);
+        //console.log('contenu', contenu);
+        router.push("/");
       } else {
         toast.error("Rien à enregistrer", { icon: '🟥' });
       }

@@ -13,7 +13,7 @@ export default function Home() {
         </div>
         <div className="my-auto md:ml-3">
           <Tooltip title="Application de suivi des migraines - développé par ESHome33 - mai 2024"
-            className="ml-3">
+            className="md:ml-3">
             <IconButton
               className="bg-slate-300 hover:bg-orange-300 h-10 align-top"
             >
@@ -33,7 +33,7 @@ export default function Home() {
         </CardContent>
         <CardActions>
           <Button size="small" className="bg-orange-600 text-white mx-auto hover:bg-orange-300 hover:text-orange-900">
-            <Link href={"/calendar"}>Calendriers</Link>
+            <Link href={"/calendar#footer"}>Calendriers</Link>
           </Button>
         </CardActions>
       </Card>
@@ -48,7 +48,7 @@ export default function Home() {
         </CardContent>
         <CardActions>
           <Button size="small" className="bg-orange-600 text-white mx-auto  hover:bg-orange-300 hover:text-orange-900">
-            <Link href={"suivi"}>Saisie</Link>
+            <Link href={"/suivi"}>Saisie</Link>
           </Button>
         </CardActions>
       </Card>

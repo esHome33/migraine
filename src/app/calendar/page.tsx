@@ -45,8 +45,8 @@ const CalendarPage = () => {
             )
           })}
         </List>
-        <div className="mt-4 mx-auto">
-          <Button href="/">Retour</Button>
+        <div className="mt-4 mx-auto text-center" id='footer'>
+          <Button href="/" variant="contained">Retour</Button>
         </div>
       </div>
     )

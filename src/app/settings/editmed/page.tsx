@@ -14,6 +14,7 @@ const EditMedPage = () => {
     const [m3, setM3] = useState<Traitement | undefined>();
     const [m4, setM4] = useState<Traitement | undefined>();
     const [loading, setLoading] = useState<boolean>(true);
+    const [nodata, setNodata] = useState<boolean>(false);
 
     useEffect(() => {
         const med = getTraitements();
@@ -23,6 +24,9 @@ const EditMedPage = () => {
             setM3(med.tt3);
             setM4(med.tt4);
             setLoading(false);
+        } else {
+            setLoading(false);
+            setNodata(true);
         }
     }, []);
 
@@ -32,6 +36,18 @@ const EditMedPage = () => {
     >
         chargement des données en cours ...
     </Typography>;
+
+    const affiche_nodata = <><Typography
+        variant="body1"
+        className="text-center text-blue-300"
+    >
+        aucune donnée disponible.
+    </Typography>
+        <div className="text-center mt-8">
+            <Button href="/" variant="contained">Retour</Button>
+        </div>
+    </>
+
 
     const changeM1 = (e: any) => {
         e.preventDefault();
@@ -86,7 +102,7 @@ const EditMedPage = () => {
 
     const router = useRouter();
     const valideChangements = () => {
-        if (m1 && m2 && m3 && m4) {           
+        if (m1 && m2 && m3 && m4) {
             const newTT: Traitements = {
                 tt1: m1,
                 tt2: m2,
@@ -97,7 +113,7 @@ const EditMedPage = () => {
                 sauveTraitements(newTT);
                 toast.success("Traitements correctement enregistrés", { icon: '😎', duration: 2000 });
                 router.push("/");
-            } catch (error:any) {
+            } catch (error: any) {
                 toast.error(error.message);
             }
         }
@@ -108,7 +124,7 @@ const EditMedPage = () => {
     }
 
     return (
-        <div className="max-w-2xl border mx-auto my-4 p-2 h-dvh">
+        <div className="max-w-2xl mx-auto my-4 p-2 h-dvh">
             <Toaster position="bottom-center" />
             <Typography
                 variant="h5"
@@ -119,61 +135,63 @@ const EditMedPage = () => {
             {
                 loading ? affiche_loading
                     :
-                    <div className="">
-                        <div className="flex flex-col space-y-2 items-center">
-                            <TextField
-                                variant="filled"
-                                label="Traitement 1"
-                                value={m1?.nom}
-                                onChange={changeM1}
-                                size="small"
-                                className="bg-slate-300 rounded"
-                            />
-                            <TextField
-                                variant="filled"
-                                label="Traitement 2"
-                                value={m2?.nom}
-                                onChange={changeM2}
-                                size="small"
-                                className="bg-slate-300 rounded"
-                            />
-                            <TextField
-                                variant="filled"
-                                label="Traitement 3"
-                                value={m3?.nom}
-                                onChange={changeM3}
-                                size="small"
-                                className="bg-slate-300 rounded"
-                            />
-                            <TextField
-                                variant="filled"
-                                label="Traitement 4"
-                                value={m4?.nom}
-                                onChange={changeM4}
-                                size="small"
-                                className="bg-slate-300 rounded"
-                            />
+                    nodata ? affiche_nodata
+                        :
+                        <div className="">
+                            <div className="flex flex-col space-y-2 items-center">
+                                <TextField
+                                    variant="filled"
+                                    label="Traitement 1"
+                                    value={m1?.nom}
+                                    onChange={changeM1}
+                                    size="small"
+                                    className="bg-slate-300 rounded"
+                                />
+                                <TextField
+                                    variant="filled"
+                                    label="Traitement 2"
+                                    value={m2?.nom}
+                                    onChange={changeM2}
+                                    size="small"
+                                    className="bg-slate-300 rounded"
+                                />
+                                <TextField
+                                    variant="filled"
+                                    label="Traitement 3"
+                                    value={m3?.nom}
+                                    onChange={changeM3}
+                                    size="small"
+                                    className="bg-slate-300 rounded"
+                                />
+                                <TextField
+                                    variant="filled"
+                                    label="Traitement 4"
+                                    value={m4?.nom}
+                                    onChange={changeM4}
+                                    size="small"
+                                    className="bg-slate-300 rounded"
+                                />
+
+                            </div>
+                            <div className="mt-4 text-center">
+                                <ButtonGroup variant="contained" >
+                                    <Button
+                                        className="bg-orange-600 hover:bg-orange-700"
+                                        onClick={valideChangements}
+                                    >
+                                        OK
+                                    </Button>
+                                    <Button
+                                        className="bg-orange-600 hover:bg-orange-700"
+                                        onClick={retourPage}
+                                    >
+                                        Annuler
+                                    </Button>
+                                </ButtonGroup>
+                            </div>
+
 
                         </div>
-                        <div className="mt-4 text-center">
-                            <ButtonGroup variant="contained" >
-                                <Button
-                                    className="bg-orange-600 hover:bg-orange-700"
-                                    onClick={valideChangements}
-                                >
-                                    OK
-                                </Button>
-                                <Button
-                                    className="bg-orange-600 hover:bg-orange-700"
-                                    onClick={retourPage}
-                                >
-                                    Annuler
-                                </Button>
-                            </ButtonGroup>
-                        </div>
-
-
-                    </div>
             }
 
         </div>
