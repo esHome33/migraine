@@ -1,20 +1,27 @@
 import { Button, Card, CardActions, CardContent, IconButton, Tooltip, Typography } from "@mui/material";
-import InfoIcon from '@mui/icons-material/Info';
+import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import Link from "next/link";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <Typography variant="h4">
-        GESTION MIGRAINE
-        <Tooltip title="Application de suivi des migraines - développé par ESHome33 - mai 2024"
-        className="ml-3">
-          <IconButton className="bg-slate-300 hover:bg-orange-300">
-            <InfoIcon color="primary"/>
-
-          </IconButton>
-        </Tooltip>
-      </Typography>
+      <div className="flex flex-col md:flex-row space-y-2 align-center justify-center text-center">
+        <div className="my-auto pt-2">
+          <Typography variant="h4">
+            GESTION MIGRAINE
+          </Typography>
+        </div>
+        <div className="my-auto md:ml-3">
+          <Tooltip title="Application de suivi des migraines - développé par ESHome33 - mai 2024"
+            className="ml-3">
+            <IconButton
+              className="bg-slate-300 hover:bg-orange-300 h-10 align-top"
+            >
+              <Link href={"/settings"} className=""><SettingsApplicationsIcon sx={{ color: "#FF6600", height:'60px' }} /></Link>
+            </IconButton>
+          </Tooltip>
+        </div>
+      </div>
       <Card sx={{ minWidth: "400px" }}>
         <CardContent>
           <Typography className="text-center" fontFamily={"monospace"} variant="h5">

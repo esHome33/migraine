@@ -1,4 +1,4 @@
-import { MOIS, Contenu, Traitements, Traitement, CLE_CONTENU } from "./types";
+import { MOIS, Contenu, Traitements, Traitement, CLE_CONTENU, CLE_TRAITEMENTS } from "./types";
 
 
 /**
@@ -133,4 +133,37 @@ export function getContenu() {
 		const resu: Contenu[] = [];
 		return resu;
 	}
+}
+
+export function getTraitements() {
+	if (window) {
+		const med = window.localStorage.getItem(CLE_TRAITEMENTS);
+		let resu: Traitements;
+		if (!med) {
+			resu = dummyTraitements();
+		} else {
+			resu = JSON.parse(med);
+		}
+		return resu;
+	} else {
+		return dummyTraitements();
+	}
+}
+
+export function sauveTraitements(t: Traitements) {
+	if (window) {
+		const med = JSON.stringify(t);
+		window.localStorage.setItem(CLE_TRAITEMENTS, med);
+	} else {
+		throw new Error(`ERREUR : window inexistant (${JSON.stringify(t)} non sauvé)`);
+		
+	}
+}
+
+export function IsDummyTraitements(t: Traitements):boolean {
+	const c1 = !t.tt1.valide && t.tt1.nom.length === 0;
+	const c2 = !t.tt2.valide && t.tt2.nom.length === 0;
+	const c3 = !t.tt3.valide && t.tt3.nom.length === 0;
+	const c4 = !t.tt4.valide && t.tt4.nom.length === 0;
+	return c1 && c2 && c3 && c4;
 }
