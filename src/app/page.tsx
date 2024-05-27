@@ -33,7 +33,7 @@ export default function Home() {
         </CardContent>
         <CardActions>
           <Button size="small" className="bg-orange-600 text-white mx-auto hover:bg-orange-300 hover:text-orange-900">
-            <Link href={"/calendar#footer"}>Calendriers</Link>
+            <Link href={"/calendar"}>Calendriers</Link>
           </Button>
         </CardActions>
       </Card>

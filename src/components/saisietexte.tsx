@@ -60,11 +60,10 @@ const SaisieTexte = (props: Props) => {
         if (txt !== "" && !ttvalid) {
             setTtvalid(!ttvalid);
             validation_parent(ttname, !ttvalid, mynumber);
-        } else if (txt === "" && !ttvalid) { 
+        } else if (txt === "" && !ttvalid) {
             setTtvalid(!ttvalid);
             validation_parent(ttname, !ttvalid, mynumber);
-        }
-        else {
+        } else {
             validation_parent(ttname, ttvalid, mynumber);
         }
     }
@@ -81,26 +80,28 @@ const SaisieTexte = (props: Props) => {
                     onChange={maj_nom}
                 />
             </div>
-            <IconButton
-                aria-label={aria_label_enable}
-                className='rounded-full'
-                onClick={change}
-            >
+            
                 {ttvalid ?
-                    <CheckCircleIcon className='text-green-700' />
+                    <IconButton
+                        aria-label={aria_label_enable}
+                        className='rounded-full'
+                        onClick={change}
+                    >
+                        <CheckCircleIcon className='text-green-700' />
+                    </IconButton>
                     : null}
-            </IconButton>
-            <IconButton
-                aria-label={aria_label_disable}
-                className='rounded-full'
-                onClick={change}
-            >
                 {ttvalid ?
-                    null
-                    : <CancelIcon className='text-red-700' />}
-            </IconButton>
-        </div>
-    )
+                    null :
+                    <IconButton
+                        aria-label={aria_label_disable}
+                        className='rounded-full'
+                        onClick={change}
+                    >
+                        <CancelIcon className='text-red-700' />
+                    </IconButton>}
+
+            </div>
+            )
 }
 
-export default SaisieTexte
+            export default SaisieTexte

@@ -51,7 +51,12 @@ const PageSaisieTraitement = () => {
 
         const tt: Traitement = { id: numero, nom: traitement_name, valide: isvalidated };
         if (tts) {
-            const new_tts = tts;
+            let new_tts:Traitements = {
+                tt1: tts.tt1,
+                tt2: tts.tt2,
+                tt3: tts.tt3,
+                tt4: tts.tt4
+            };
             if (numero === 1) {
                 new_tts.tt1 = tt;
             } else if (numero === 2) {

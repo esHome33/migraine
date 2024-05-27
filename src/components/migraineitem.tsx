@@ -83,9 +83,7 @@ const MigraineItem = (props: Props) => {
         props.validate(cree_contenu("date", f, false, 0, "L"));
     }
 
-    const c_l = "#a7ff9f";
-    const c_m = "#fcffbf";
-    const c_i = "#ffdebf";
+    
     let cn: string = "bg-[#a7ff9f] rounded-lg h-12 w-44 px-2 mt-2";
     const [couleur, setCouleur] = useState<string>(cn);
 

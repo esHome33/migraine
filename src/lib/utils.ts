@@ -1,5 +1,11 @@
-import { MOIS, Contenu, Traitements, Traitement, CLE_CONTENU, CLE_TRAITEMENTS } from "./types";
-
+import {
+	MOIS,
+	Contenu,
+	Traitements,
+	Traitement,
+	CLE_CONTENU,
+	CLE_TRAITEMENTS,
+} from "./types";
 
 /**
  * Finds the month in a string date YYYY-MM-DDThh:mm or DD-MM-YYYYThh:mm
@@ -84,7 +90,7 @@ export function dummyContent(): Contenu {
 		traitement2: 0,
 		traitement3: 0,
 		traitement4: 0,
-		regles:false
+		regles: false,
 	};
 }
 
@@ -101,12 +107,11 @@ export function dummyTraitement(id: number): Traitement {
 	return { id: id, nom: "", valide: false };
 }
 
-
 export function ajouteContenu(c: Contenu) {
 	if (window) {
 		const contenu = window.localStorage.getItem(CLE_CONTENU);
 		if (!contenu) {
-			const resu: Contenu[] = []
+			const resu: Contenu[] = [];
 			resu.push(c);
 			const sav = JSON.stringify(resu);
 			window.localStorage.setItem(CLE_CONTENU, sav);
@@ -119,6 +124,11 @@ export function ajouteContenu(c: Contenu) {
 	}
 }
 
+/**
+ * lit les enregistrements dans le local storage et les fournit. Renvoit
+ * un tableau vide s'il n'y a aucun contenu dans le local storage.
+ * @returns Contenu[] ou []
+ */
 export function getContenu() {
 	if (window) {
 		const contenu = window.localStorage.getItem(CLE_CONTENU);
@@ -135,6 +145,10 @@ export function getContenu() {
 	}
 }
 
+/**
+ * retrouve les traitements stockés dans le local storage.
+ * @returns traitements
+ */
 export function getTraitements() {
 	if (window) {
 		const med = window.localStorage.getItem(CLE_TRAITEMENTS);
@@ -150,20 +164,75 @@ export function getTraitements() {
 	}
 }
 
+/**
+ * Sauve les traitements dans le local storage
+ * @param t traitements
+ */
 export function sauveTraitements(t: Traitements) {
 	if (window) {
 		const med = JSON.stringify(t);
 		window.localStorage.setItem(CLE_TRAITEMENTS, med);
 	} else {
-		throw new Error(`ERREUR : window inexistant (${JSON.stringify(t)} non sauvé)`);
-		
+		throw new Error(
+			`ERREUR : window inexistant (${JSON.stringify(t)} non sauvé)`
+		);
 	}
 }
 
-export function IsDummyTraitements(t: Traitements):boolean {
+/**
+ * Vérifie si les traitements sont dummys
+ * @param t traitements
+ * @returns vrai si le traitements sont factices (dummy)
+ */
+export function IsDummyTraitements(t: Traitements): boolean {
 	const c1 = !t.tt1.valide && t.tt1.nom.length === 0;
 	const c2 = !t.tt2.valide && t.tt2.nom.length === 0;
 	const c3 = !t.tt3.valide && t.tt3.nom.length === 0;
 	const c4 = !t.tt4.valide && t.tt4.nom.length === 0;
 	return c1 && c2 && c3 && c4;
+}
+
+/**
+ * Analyse le contenu fourni en param
+ * et en extrait les différents mois présents
+ *
+ * @param c le contenu tel qu'extrait du local storage
+ * @returns un tableau des mois trouvés dans
+ * le contenu fourni
+ */
+export function AnalyseContent(c: Contenu[]): string[] {
+	let resu: string[] = [];
+	c.map((contenu) => {
+		const date = contenu.date;
+		const morceaux = date.split("-");
+		const annee = morceaux[0];
+		const mois = contenu.mois;
+		const intitule = `${annee} - ${mois}`;
+		if (!resu.includes(intitule)) {
+			resu.push(intitule);
+		}
+	});
+	return resu;
+}
+
+/**
+ * Extrait les contenus de la liste fournie qui correspondent au filtre fourni
+ *
+ * @param filtre année et mois pour filtrer les contenus (ex : "2024 - fev")
+ * @param c liste des contenus venant du local storage.
+ * @returns les contenus qui correspondent à l'année et au mois du filtre
+ */
+export function GetFilteredContent(filtre: string, c: Contenu[]): Contenu[] {
+	const resu: Contenu[] = [];
+	c.map((contenu) => {
+		const date = contenu.date;
+		const morceaux = date.split("-");
+		const annee = morceaux[0];
+		const mois = contenu.mois;
+		const intitule = `${annee} - ${mois}`;
+		if (intitule === filtre) {
+			resu.push(contenu);
+		}
+	});
+	return resu;
 }

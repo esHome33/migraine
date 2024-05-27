@@ -1,13 +1,10 @@
 import { IconButton, Typography } from '@mui/material'
 import TuneIcon from '@mui/icons-material/Tune';
-import React from 'react'
 
-type Props = {}
-
-const SettingsPage = (props: Props) => {
+const SettingsPage = () => {
     return (
         <div className='max-w-2xl mx-auto mt-4 p-2 h-dvh rounded bg-slate-900'>
-            <div className='flex flex-col space-y-6  text-justify'>
+            <div className='flex flex-col space-y-6  text-justify p-1'>
                 <Typography variant='h4'>Aide et réglages</Typography>
                 <Typography variant='body1'>Cette appli vous permet de suivre les migraines, la date de survenue,
                     l&apos;environnement et la médication.
@@ -35,7 +32,7 @@ const SettingsPage = (props: Props) => {
                 </div>
                 <hr className='bg-orange-600 h-1 w-full' />
             </div>
-            <div className='flex flex-row space-x-4 mt-8 align-baseline'>
+            <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
                 <Typography
                     variant='body1'
                     className='text-orange-200 font-bold'
@@ -44,12 +41,12 @@ const SettingsPage = (props: Props) => {
                 </Typography>
                 <IconButton
                     href='/settings/editmed'
-                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100'>
+                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100 h-10 w-10'>
                     <TuneIcon />
                 </IconButton>
             </div>
 
-            <div className='flex flex-row space-x-4 mt-8 align-baseline'>
+            <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
                 <Typography
                     variant='body1'
                     className='text-orange-200 font-bold'
@@ -58,9 +55,24 @@ const SettingsPage = (props: Props) => {
                 </Typography>
                 <IconButton
                     href=''
-                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100'>
+                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100 h-10 w-10'>
                     <TuneIcon />
                 </IconButton>
+
+            </div>
+            <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
+                <Typography
+                    variant='body1'
+                    className='text-orange-200 font-bold'
+                >
+                    Effacer tout :
+                </Typography>
+                <IconButton
+                    href='/clear'
+                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100 h-10 w-10'>
+                    <TuneIcon />
+                </IconButton>
+
             </div>
         </div>
     )

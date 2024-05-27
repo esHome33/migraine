@@ -31,7 +31,7 @@ const Traitem = (props: Props) => {
         const valeur = Number.parseInt(val);
         if (!Number.isNaN(valeur)) {
             setQte(valeur);
-            props.enregistreur(my_num, check, valeur);
+            validation_parent(my_num, check, valeur);
         } else {
             if (val === "") {
                 setQte("");
