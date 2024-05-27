@@ -52,7 +52,9 @@ export default function Home() {
           </Button>
         </CardActions>
       </Card>
-
+      <div className="text-sm text-orange-700">
+        version 1.1
+      </div>
     </main>
   );
 }
