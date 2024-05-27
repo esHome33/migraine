@@ -44,7 +44,11 @@ const EditMedPage = () => {
         aucune donnée disponible.
     </Typography>
         <div className="text-center mt-8">
-            <Button href="/" variant="contained">Retour</Button>
+            <Button
+                href="/settings"
+                variant="contained"
+                className="bg-orange-600 hover:bg-orange-500"
+            >Retour</Button>
         </div>
     </>
 
@@ -111,21 +115,21 @@ const EditMedPage = () => {
             }
             try {
                 sauveTraitements(newTT);
-                toast.success("Traitements correctement enregistrés", { icon: '😎', duration: 2000 });
-                router.push("/");
+                toast.success("Traitements correctement enregistrés", { icon: '😎', duration: 2500 });
+                router.push("/settings");
             } catch (error: any) {
-                toast.error(error.message);
+                toast.error(error.message, { duration: 4000 });
             }
         }
     }
 
     const retourPage = () => {
-        router.push("/");
+        router.push("/settings");
     }
 
     return (
         <div className="max-w-2xl mx-auto my-4 p-2 h-dvh">
-            <Toaster position="bottom-center" />
+            <Toaster />
             <Typography
                 variant="h5"
                 className="text-center mb-4"

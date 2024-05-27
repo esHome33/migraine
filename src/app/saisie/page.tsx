@@ -12,6 +12,18 @@ const PageSaisieTraitement = () => {
     const [tts, setTts] = useState<Traitements | undefined>(undefined);
     const [error, setError] = useState<boolean>(false);
 
+    const [v1, setV1] = useState<boolean>(false);
+    const [v2, setV2] = useState<boolean>(false);
+    const [v3, setV3] = useState<boolean>(false);
+    const [v4, setV4] = useState<boolean>(false);
+
+    const [nom1, setNom1] = useState<string>("");
+    const [nom2, setNom2] = useState<string>("");
+    const [nom3, setNom3] = useState<string>("");
+    const [nom4, setNom4] = useState<string>("");
+
+
+
     const isValid = (t: Traitements) => {
         // au moins un des traitements doit être validés
         const v1 = t.tt1.valide && t.tt1.nom.length > 0;
@@ -42,14 +54,18 @@ const PageSaisieTraitement = () => {
         }
     }, []);
     
-    const valideTraitement = (traitement_name: string, isvalidated: boolean, numero: number) => {
+    const valideTraitement = (t:Traitement) => {
 
+        const traitement_name:string = t.nom;
+        const isvalidated: boolean = t.valide;
+        const numero:number = t.id;
         if (traitement_name === "" && isvalidated) {
             setError(true);
             return;
         }
 
-        const tt: Traitement = { id: numero, nom: traitement_name, valide: isvalidated };
+        
+        
         if (tts) {
             let new_tts:Traitements = {
                 tt1: tts.tt1,
@@ -58,13 +74,13 @@ const PageSaisieTraitement = () => {
                 tt4: tts.tt4
             };
             if (numero === 1) {
-                new_tts.tt1 = tt;
+                new_tts.tt1 = t;
             } else if (numero === 2) {
-                new_tts.tt2 = tt;
+                new_tts.tt2 = t;
             } else if (numero === 3) {
-                new_tts.tt3 = tt;
+                new_tts.tt3 = t;
             } else if (numero === 4) {
-                new_tts.tt4 = tt;
+                new_tts.tt4 = t;
             }
             setTts(new_tts);
             const v = isValid(new_tts);
@@ -89,10 +105,10 @@ const PageSaisieTraitement = () => {
                 {
                     !tts ? <Typography variant='body2' color={'blue'}>chargement des données...</Typography>
                         : <>
-                            <SaisieTexte traitement={tts} key={1} num={1} valide={valideTraitement} />
-                            <SaisieTexte traitement={tts} key={2} num={2} valide={valideTraitement} />
-                            <SaisieTexte traitement={tts} key={3} num={3} valide={valideTraitement} />
-                            <SaisieTexte traitement={tts} key={4} num={4} valide={valideTraitement} />
+                            <SaisieTexte id={1} traitement={tts} key={10001} sauver={valideTraitement} />
+                            <SaisieTexte id={2} traitement={tts} key={10002} sauver={valideTraitement} />
+                            <SaisieTexte id={3} traitement={tts} key={10003} sauver={valideTraitement} />
+                            <SaisieTexte id={4} traitement={tts} key={10004} sauver={valideTraitement} />
                         </>
                 }
             </div>
@@ -100,20 +116,21 @@ const PageSaisieTraitement = () => {
             <div className='mt-6'>
                 {error ?
                     <Alert icon={<WarningIcon fontSize="inherit" />} severity="warning">
-                        Vous devez valider au moins un traitement et remplir le nom des traitements validés.
+                        Vous devez valider au moins un traitement et un traitement validé doit avoir un
+                        nom d&apos;au moins un caractère.
                     </Alert> : null
                 }
             </div>
-            <div className='mx-auto mt-6'>
+            <div className='text-right mt-6'>
                 <ButtonGroup>
                     <Button
                         variant='contained'
-                        className='bg-[#019b2d] hover:bg-[#4eda76] hover:text-black'
+                        className='bg-[#fda20e] hover:bg-[#ecb762] hover:text-black'
                         onClick={go_valid}
                     >Valider</Button>
                     <Button
                         variant='contained'
-                        className='bg-[#123256] hover:bg-[#528ed2]  hover:text-black'
+                        className='bg-[#3e71ac] hover:bg-[#528ed2]  hover:text-black'
                         onClick={retourMaison}
                     >Annuler</Button>
                 </ButtonGroup>

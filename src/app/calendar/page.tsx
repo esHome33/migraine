@@ -96,10 +96,25 @@ const CalendarPage = () => {
 									className="bg-orange-200 rounded text-center text-black">
 									Synthèse
 								</Typography>
-								<Typography variant="body2">il y a {items.length} item affiché</Typography>
-								<Typography variant="body2" className="italic">
-									{filtre_s === "" ? "items non filtrés" : `filtre actif ${filtre_s}`}
+								<Typography variant="body2">
+									il y a {items.length} item affiché
+									{items.length > 1 ?
+										"s":""
+									}
 								</Typography>
+
+								{filtre_s === "" ?
+									<Typography variant="body2" className="italic">
+										items non filtrés
+									</Typography>
+									:
+									<Typography
+										variant="body2"
+										className="italic text-red-600"
+									>
+										{`filtre actif ${filtre_s}`}
+									</Typography>
+								}
 							</div>
 
 						</div>

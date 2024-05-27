@@ -47,14 +47,14 @@ const ClearAll = () => {
 
             </div>
             <div className="flex sm:flex-row mt-8 justify-center ">
-                <Typography variant="h5" className="mr-4">Effacer tout </Typography>
-                <IconButton className="bg-red-400 hover:bg-red-200 w-10 h-10 shadow shadow-red-100"
+                <Typography variant="h5" className="mr-4 mt-2">Effacer tout </Typography>
+                <IconButton className="bg-red-400 hover:bg-red-600 w-12 h-12 shadow shadow-red-100 text-white"
                     onClick={ouvre}
                 >
                     <DeleteForeverIcon />
                 </IconButton>
             </div>
-            <div className="mt-8 text-center">
+            <div className="mt-10 text-center">
                 <Button className="bg-orange-400 hover:bg-orange-500 text-white"
                     onClick={back_home}
                     startIcon={<ArrowBackIcon />} 

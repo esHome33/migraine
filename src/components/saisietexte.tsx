@@ -3,69 +3,69 @@
 import { IconButton, TextField } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import React, { useEffect, useState } from 'react'
-import { Traitements } from '@/lib/types';
+import React, { useState } from 'react'
+import { Traitement, Traitements } from '@/lib/types';
 
 type Props = {
-    traitement: Traitements | undefined;
-    num: number;
-    valide: (traitement_name: string, isvalidated: boolean, numero: number) => void;
+    id: number;
+    traitement: Traitements;
+    sauver: (t: Traitement) => void;
 }
 
-const SaisieTexte = (props: Props) => {
+const SaisieTexte = ({ sauver, traitement, id }: Props) => {
 
-    const validation_parent = props.valide;
-
-    const id = props.num;
     let myvalid: boolean = false;
     let myname: string = "";
-    if (props.traitement) {
-        if (id === 1) {
-            myvalid = props.traitement.tt1.valide;
-            myname = props.traitement.tt1.nom;
-        } else if (id === 2) {
-            myvalid = props.traitement.tt2.valide;
-            myname = props.traitement.tt2.nom;
-        } else if (id === 3) {
-            myvalid = props.traitement.tt3.valide;
-            myname = props.traitement.tt3.nom;
-        } else if (id === 4) {
-            myvalid = props.traitement.tt4.valide
-            myname = props.traitement.tt4.nom;
-        }
+    if (id === 1) {
+        myvalid = traitement.tt1.valide;
+        myname = traitement.tt1.nom;
+    } else if (id === 2) {
+        myvalid = traitement.tt2.valide;
+        myname = traitement.tt2.nom;
+    } else if (id === 3) {
+        myvalid = traitement.tt3.valide;
+        myname = traitement.tt3.nom;
+    } else if (id === 4) {
+        myvalid = traitement.tt4.valide
+        myname = traitement.tt4.nom;
     }
-    const mynumber: number = id;
+
 
     const [ttvalid, setTtvalid] = useState<boolean>(myvalid);
     const [ttname, setTtname] = useState<string>(myname);
 
-    const label = `nom ${mynumber}`;
-    const aria_label_enable = `enable traitement ${mynumber}`;
-    const aria_label_disable = `disable traitement ${mynumber}`;
+    const label = `nom ${id}`;
+    const aria_label_enable = `enable traitement ${id}`;
+    const aria_label_disable = `disable traitement ${id}`;
 
-    const change = () => {
+    const change_validation = () => {
         setTtvalid(!ttvalid);
-        validation_parent(ttname, !ttvalid, mynumber);
+        sauver_tt(id, ttname, !ttvalid);
     }
 
-    useEffect(() => {
-        validation_parent(ttname, ttvalid, mynumber);
-    }, []);
+    const sauver_tt = (id: number, name: string, valid: boolean) => {
+        const resu: Traitement = {
+            id: id,
+            nom: name,
+            valide: valid
+        };
+        sauver(resu);
+    }
 
     const maj_nom = (e: any) => {
         e.preventDefault();
         const txt = e.target.value;
-        setTtname(txt);
 
         if (txt !== "" && !ttvalid) {
             setTtvalid(!ttvalid);
-            validation_parent(ttname, !ttvalid, mynumber);
+            sauver_tt(id, txt, !ttvalid);
         } else if (txt === "" && !ttvalid) {
             setTtvalid(!ttvalid);
-            validation_parent(ttname, !ttvalid, mynumber);
+            sauver_tt(id, txt, !ttvalid);
         } else {
-            validation_parent(ttname, ttvalid, mynumber);
+            sauver_tt(id, txt, ttvalid);
         }
+        setTtname(txt);
     }
 
     return (
@@ -75,33 +75,33 @@ const SaisieTexte = (props: Props) => {
                     label={label}
                     size='small'
                     variant='outlined'
-                    color='error'
+                    color='info'
                     value={ttname}
                     onChange={maj_nom}
                 />
             </div>
-            
-                {ttvalid ?
-                    <IconButton
-                        aria-label={aria_label_enable}
-                        className='rounded-full'
-                        onClick={change}
-                    >
-                        <CheckCircleIcon className='text-green-700' />
-                    </IconButton>
-                    : null}
-                {ttvalid ?
-                    null :
-                    <IconButton
-                        aria-label={aria_label_disable}
-                        className='rounded-full'
-                        onClick={change}
-                    >
-                        <CancelIcon className='text-red-700' />
-                    </IconButton>}
 
-            </div>
-            )
+            {ttvalid ?
+                <IconButton
+                    aria-label={aria_label_enable}
+                    className='rounded-full'
+                    onClick={change_validation}
+                >
+                    <CheckCircleIcon className='text-green-700' />
+                </IconButton>
+                :
+                <IconButton
+                    aria-label={aria_label_disable}
+                    className='rounded-full'
+                    onClick={change_validation}
+                >
+                    <CancelIcon className='text-red-700' />
+                </IconButton>
+
+            }
+
+        </div>
+    )
 }
 
-            export default SaisieTexte
+export default SaisieTexte

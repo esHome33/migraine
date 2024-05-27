@@ -53,7 +53,7 @@ const SuiviPage = () => {
         toast.error("Rien à enregistrer", { icon: '🟥' });
       }
     } else {
-      toast.error("Modifiez au moins une valeur dans cette page avant d'enregistrer !", { icon: '⚡' });
+      toast.error("Ajoutez un traitement pour pouvoir enregistrer !", { icon: '⚡' });
     }
   }
 
@@ -67,7 +67,7 @@ const SuiviPage = () => {
     } else {
       setContenu(contenu);
       setTouched(true);
-      console.log("contenu mis dans le state", contenu);
+      //console.log("contenu mis dans le state", contenu);
     }
   }
 
@@ -94,7 +94,7 @@ const SuiviPage = () => {
     <div className="max-w-3xl p-4 mx-auto">
       <Toaster position="top-center" />
       <Box>
-        <Card className="mt-8 bg-[#a0beca]" variant="outlined">
+        <Card className="mt-1 sm:mt-8 bg-[#a0beca]" variant="outlined">
           <CardHeader
             title="Informations Migraine"
             sx={{ backgroundColor: "#c3e9f8", color: "darkblue" }}
@@ -112,8 +112,8 @@ const SuiviPage = () => {
             }
           </CardContent>
           <CardActions className="p-2">
-            <ButtonGroup className="max-w-screen-sm text-center" variant="contained">
-              <Button onClick={enregistreData}>Valider</Button>
+            <ButtonGroup className="max-w-screen-sm ml-auto mr-1 mb-1" variant="contained">
+              <Button onClick={enregistreData}>Enregistrer</Button>
               <Button href="/">Annuler</Button>
             </ButtonGroup>
           </CardActions>
