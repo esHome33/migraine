@@ -87,9 +87,13 @@ export function dummyContent(): Contenu {
 		postdrome: false,
 		prodrome: false,
 		traitement1: 0,
+		nom_t1:"",
 		traitement2: 0,
+		nom_t2:"",
 		traitement3: 0,
+		nom_t3:"",
 		traitement4: 0,
+		nom_t4: "",
 		regles: false,
 	};
 }

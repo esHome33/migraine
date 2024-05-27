@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 
-const SuiviPage = () => {
+const Suivi = () => {
 
   const [noTraitements, setNoTraitements] = useState<boolean>(true);
   const [contenu, setContenu] = useState<Contenu | undefined>(undefined);
@@ -123,4 +123,4 @@ const SuiviPage = () => {
   )
 }
 
-export default SuiviPage;
+export default Suivi;

@@ -29,9 +29,13 @@ export type Contenu = {
 	regles: boolean;
 	impact: IMPACT;
 	traitement1: number;
+	nom_t1: string;
 	traitement2: number;
+	nom_t2: string;
 	traitement3: number;
+	nom_t3: string;
 	traitement4: number;
+	nom_t4: string;
 };
 
 export type Traitements = {

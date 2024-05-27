@@ -116,7 +116,7 @@ const EditMedPage = () => {
             try {
                 sauveTraitements(newTT);
                 toast.success("Traitements correctement enregistrés", { icon: '😎', duration: 2500 });
-                router.push("/settings");
+                router.replace("/settings");
             } catch (error: any) {
                 toast.error(error.message, { duration: 4000 });
             }

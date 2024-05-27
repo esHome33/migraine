@@ -10,7 +10,7 @@ type Props = {
 const CalendarLine = (props: Props) => {
     const content = props.ligne;
 
-    const duree =content.duree;
+    const duree = content.duree;
 
     const regles = content.regles ?
         <FormControlLabel control={<Checkbox defaultChecked />} label="Règles" /> : null;
@@ -39,6 +39,24 @@ const CalendarLine = (props: Props) => {
             <Typography className='text-orange-900 bg-orange-200 rounded-lg ml-3 px-1 font-bold w-8 h-6 text-center'>M</Typography>
         )
 
+    const t1 = (content.traitement1 > 0 && content.nom_t1 !== "") ?
+        <div className='text-xs text-blue-300 mr-1'>{`${content.nom_t1}: ${content.traitement1}`}</div>
+        : null;
+
+    const t2 = (content.traitement2 > 0 && content.nom_t2 !== "") ?
+        <div className='text-xs text-violet-300 mr-1'>{`${content.nom_t2}: ${content.traitement2}`}</div>
+        : null;
+
+    const t3 = (content.traitement3 > 0 && content.nom_t3 !== "") ?
+        <div className='text-xs text-blue-300 mr-1'>{`${content.nom_t3}: ${content.traitement3}`}</div>
+        : null;
+
+    const t4 = (content.traitement4 > 0 && content.nom_t4 !== "") ?
+        <div className='text-xs text-violet-300 mr-1'>{`${content.nom_t4}: ${content.traitement4}`}</div>
+        : null;
+
+
+
     return (
         <>
             <ListItem className='rounded-md border-blue-400 border' >
@@ -51,7 +69,10 @@ const CalendarLine = (props: Props) => {
                         <span className='flex flex-row'>durée {duree}</span>
                     </div>
                     <div className='flex flex-row flex-wrap'>
-                        {ceph} {nuit} { regles} {aura} {postdrome} {prodrome}
+                        {ceph} {nuit} {regles} {aura} {postdrome} {prodrome}
+                    </div>
+                    <div className='flex flex-row flex-wrap'>
+                        {t1} {t2} {t3} {t4}
                     </div>
                 </div>
             </ListItem>

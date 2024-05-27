@@ -9,7 +9,7 @@ type Props = {
     enregistreur: (numero: number, check: boolean, quantite: number | "") => void;
 }
 
-const Traitem = (props: Props) => {
+const Traitemt = (props: Props) => {
 
     const validation_parent = props.enregistreur;
     const myTrt = props.traitement;
@@ -68,4 +68,4 @@ const Traitem = (props: Props) => {
     )
 }
 
-export default Traitem
+export default Traitemt

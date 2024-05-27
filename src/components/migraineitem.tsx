@@ -12,7 +12,6 @@ type Props = {
 }
 
 
-
 const MigraineItem = (props: Props) => {
 
     const myTraitements = props.traitements;
@@ -75,6 +74,61 @@ const MigraineItem = (props: Props) => {
             return "MODERE";
         }
     }
+
+    const cree_contenu = (nom_champ: string, string: string, bool: boolean, number: number, new_impact: IMPACT) => {
+        const m = trouveMoisS(datee);
+        const resu: Contenu = {
+            date: datee,
+            mois: m,
+            duree: duree,
+            impact: impact,
+            traitement1: qte1,
+            nom_t1:myTraitements.tt1.nom,
+            traitement2: qte2,
+            nom_t2:myTraitements.tt2.nom,
+            traitement3: qte3,
+            nom_t3: myTraitements.tt3.nom,
+            traitement4: qte4,
+            nom_t4: myTraitements.tt4.nom,
+            aura: aura2,
+            cephalee: cephalee3,
+            nuit: nuit6,
+            postdrome: postdrome4,
+            prodrome: prodrome1,
+            regles: regles5
+        }
+        if (nom_champ === "date") {
+            resu.date = string;
+            resu.mois = trouveMoisS(string);
+        } else if (nom_champ === "duree") {
+            resu.duree = string;
+        } else if (nom_champ === "impact") {
+            resu.impact = new_impact;
+        } else if (nom_champ === "traitement1") {
+            resu.traitement1 = number;
+        } else if (nom_champ === "traitement2") {
+            resu.traitement2 = number;
+        } else if (nom_champ === "traitement3") {
+            resu.traitement3 = number;
+        } else if (nom_champ === "traitement4") {
+            resu.traitement4 = number;
+        } else if (nom_champ === "aura") {
+            resu.aura = bool;
+        } else if (nom_champ === "cephalee") {
+            resu.cephalee = bool;
+        } else if (nom_champ === "nuit") {
+            resu.nuit = bool;
+        } else if (nom_champ === "postdrome") {
+            resu.postdrome = bool;
+        } else if (nom_champ === "prodrome") {
+            resu.prodrome = bool;
+        } else if (nom_champ === "regles") {
+            resu.regles = bool;
+        } else throw new Error(`vérifie ce champ de crotte : ${nom_champ} `);
+
+        return resu;
+    }
+
 
     const chg_date = (e: any) => {
         const f = e.target.value;
@@ -160,55 +214,6 @@ const MigraineItem = (props: Props) => {
         }
     }
 
-    const cree_contenu = (nom_champ: string, string: string, bool: boolean, number: number, new_impact: IMPACT) => {
-        const m = trouveMoisS(datee);
-        const resu: Contenu = {
-            date: datee,
-            mois: m,
-            duree: duree,
-            impact: impact,
-            traitement1: qte1,
-            traitement2: qte2,
-            traitement3: qte3,
-            traitement4: qte4,
-            aura: aura2,
-            cephalee: cephalee3,
-            nuit: nuit6,
-            postdrome: postdrome4,
-            prodrome: prodrome1,
-            regles: regles5
-        }
-        if (nom_champ === "date") {
-            resu.date = string;
-            resu.mois = trouveMoisS(string);
-        } else if (nom_champ === "duree") {
-            resu.duree = string;
-        } else if (nom_champ === "impact") {
-            resu.impact = new_impact;
-        } else if (nom_champ === "traitement1") {
-            resu.traitement1 = number;
-        } else if (nom_champ === "traitement2") {
-            resu.traitement2 = number;
-        } else if (nom_champ === "traitement3") {
-            resu.traitement3 = number;
-        } else if (nom_champ === "traitement4") {
-            resu.traitement4 = number;
-        } else if (nom_champ === "aura") {
-            resu.aura = bool;
-        } else if (nom_champ === "cephalee") {
-            resu.cephalee = bool;
-        } else if (nom_champ === "nuit") {
-            resu.nuit = bool;
-        } else if (nom_champ === "postdrome") {
-            resu.postdrome = bool;
-        } else if (nom_champ === "prodrome") {
-            resu.prodrome = bool;
-        } else if (nom_champ === "regles") {
-            resu.regles = bool;
-        } else throw new Error(`vérifie ce champ de crotte : ${nom_champ} `);
-
-        return resu;
-    }
 
 
     return (

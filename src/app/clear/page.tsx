@@ -3,11 +3,11 @@
 import { Button, IconButton, Typography } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ConfirmationDialog from "@/components/confdia";
 import { CLE_CONTENU, CLE_TRAITEMENTS } from "@/lib/types";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import ConfirmationDialog from "@/components/confirmationdialog";
 
 
 const ClearAll = () => {

@@ -1,21 +1,30 @@
 'use client'
 
-import Caldrawer from "@/components/calendardrawer";
 import CalendarLine from "@/components/calendarline";
 import { Contenu } from "@/lib/types";
 import { AnalyseContent, getContenu, GetFilteredContent } from "@/lib/utils";
-import { Button, Drawer, IconButton, List, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Button, Drawer, IconButton, List, Snackbar, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { Toaster } from "react-hot-toast";
+import Caldrawer from "@/components/caldrawer";
+import { useRouter } from "next/navigation";
 
 
-const CalendarPage = () => {
+const Calendar = () => {
 
 	const [items_init, setItems_init] = useState<Contenu[] | undefined>(undefined);
 	const [items, setItems] = useState<Contenu[] | undefined>(undefined);
 	const [mois, setMois] = useState<string[]>([]);
-	const [filtre_s, setFiltre_s] = useState<string>("");
+	const [filtre_s, setFiltre_s] = useState<string>("X");
 	const [open, setOpen] = useState<boolean>(false);
+	const [openInfo, setOpenInfo] = useState<boolean>(false);
+	const [msg_info, setMsg_info] = useState<string>("");
+
+	let data_dl = useRef<string>("?data=");
+	let title_dl = useRef<string>("&title=X");
+
+	const router = useRouter();
 
 	useEffect(() => {
 		const c = getContenu();
@@ -25,17 +34,47 @@ const CalendarPage = () => {
 		setMois(mm);
 	}, []);
 
+	useEffect(() => {
+		if (items) {
+
+			let resu: string = "";
+			items.map((item, index) => {
+				resu += `${index};${item.date};${item.mois};${item.aura};${item.cephalee};${item.duree};${item.impact};`
+				resu += `${item.nuit};${item.prodrome};${item.postdrome};${item.regles};`
+				resu += `${item.nom_t1};${item.traitement1};`
+				resu += `${item.nom_t2};${item.traitement2};`
+				resu += `${item.nom_t3};${item.traitement3};`
+				resu += `${item.nom_t4};${item.traitement4};`
+				resu += "\r\n";
+
+			});
+			data_dl.current = encodeURI("?data=" + resu);
+		}
+	}, [items]);
+
+	useEffect(() => { 
+		title_dl.current = encodeURI("&title=" + filtre_s);
+	}, [filtre_s]);
+
+
+	const faire_download = () => {
+		const d = data_dl.current;
+		const t = title_dl.current;
+		const url = "/dl" + d + t;
+		setMsg_info(`url = ${url}`);
+		setOpenInfo(true);
+		//router.push(url);
+	}
+
 	const ouvre_panel = () => {
 		setOpen(true);
 	}
-
-
 
 	const filtre = (filtre: string) => {
 		if (items_init) {
 			if (filtre === "X") {
 				setItems(items_init);
-				setFiltre_s("");
+				setFiltre_s("X");
 			} else {
 				const liste_filtree = GetFilteredContent(filtre, items_init);
 				setItems(liste_filtree);
@@ -43,6 +82,13 @@ const CalendarPage = () => {
 			}
 			setOpen(false);
 		}
+	}
+
+	const handleInfoClose = (o: object, r: string)=>{
+		if (r === 'clickaway') {
+			return;
+		}
+		setOpenInfo(false);
 	}
 
 	if (!items) {
@@ -70,15 +116,22 @@ const CalendarPage = () => {
 		);
 	} else {
 		return (<>
-			<div className="sticky top-4 ml-6 h-1">
+			<Snackbar
+				open={openInfo}
+				onClose={handleInfoClose}
+				message = {msg_info}
+			/>
+
+			
+			<div className="sticky top-4 ml-4 h-1">
 				<IconButton onClick={ouvre_panel}
 					className="bg-orange-200 hover:bg-orange-200 h-11 w-11"
 				>
 					<MenuOpenIcon />
 				</IconButton>
 			</div>
-			<div className="max-w-3xl rounded-md ml-20 p-4">
-
+			<div className="max-w-3xl rounded-md ml-14 p-4">
+				<Toaster />
 				<Drawer open={open} onClose={() => setOpen(false)}>
 					<Caldrawer
 						items={mois}
@@ -99,11 +152,11 @@ const CalendarPage = () => {
 								<Typography variant="body2">
 									il y a {items.length} item affiché
 									{items.length > 1 ?
-										"s":""
+										"s" : ""
 									}
 								</Typography>
 
-								{filtre_s === "" ?
+								{filtre_s === "" || filtre_s === "X" ?
 									<Typography variant="body2" className="italic">
 										items non filtrés
 									</Typography>
@@ -118,7 +171,16 @@ const CalendarPage = () => {
 							</div>
 
 						</div>
-						<div className="mx-auto text-center flex-grow-0">
+						<div className="mx-auto text-right flex-grow-0">
+							<Button
+								onClick={faire_download}
+								variant="contained"
+								className="bg-orange-500 hover:bg-orange-400"
+							>
+								TELECHARGE
+							</Button>
+						</div>
+						<div className="mx-auto text-right flex-grow-0">
 							<Button
 								href="/"
 								variant="contained"
@@ -127,6 +189,7 @@ const CalendarPage = () => {
 								Retour
 							</Button>
 						</div>
+
 					</div>
 					<div>
 						<List className="bg-slate-700 rounded-md p-2">
@@ -147,4 +210,4 @@ const CalendarPage = () => {
 
 }
 
-export default CalendarPage;
+export default Calendar;

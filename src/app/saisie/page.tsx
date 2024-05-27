@@ -7,20 +7,10 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { dummyTraitements } from '@/lib/utils';
 
-const PageSaisieTraitement = () => {
+const Saisie = () => {
 
     const [tts, setTts] = useState<Traitements | undefined>(undefined);
     const [error, setError] = useState<boolean>(false);
-
-    const [v1, setV1] = useState<boolean>(false);
-    const [v2, setV2] = useState<boolean>(false);
-    const [v3, setV3] = useState<boolean>(false);
-    const [v4, setV4] = useState<boolean>(false);
-
-    const [nom1, setNom1] = useState<string>("");
-    const [nom2, setNom2] = useState<string>("");
-    const [nom3, setNom3] = useState<string>("");
-    const [nom4, setNom4] = useState<string>("");
 
 
 
@@ -38,7 +28,7 @@ const PageSaisieTraitement = () => {
     const go_valid = () => {
         if (tts && isValid(tts)) {
             window.localStorage.setItem(CLE_TRAITEMENTS, JSON.stringify(tts));
-            router.replace("/");
+            router.push("/");
         }
     }
 
@@ -89,7 +79,7 @@ const PageSaisieTraitement = () => {
     }
 
     const retourMaison = () => {
-        router.replace("/");
+        router.push("/");
     }
 
     return (
@@ -140,4 +130,4 @@ const PageSaisieTraitement = () => {
     )
 }
 
-export default PageSaisieTraitement;
+export default Saisie;

@@ -1,10 +1,9 @@
-import React from 'react'
 
 type Props = {
     date: string;
 }
 
-const DateHeure = ({ date }: Props) => {
+const DateHeur = ({ date }: Props) => {
 
     const m = date.split("T")
     const la_date = m[0];
@@ -17,4 +16,4 @@ const DateHeure = ({ date }: Props) => {
     )
 }
 
-export default DateHeure
+export default DateHeur;
