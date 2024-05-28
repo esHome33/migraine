@@ -7,7 +7,7 @@ import { CLE_CONTENU, CLE_TRAITEMENTS } from "@/lib/types";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import ConfirmationDialog from "@/components/confirmationdialog";
+import ConfirmationDialog from "@/components/confirmationDialog";
 
 
 const ClearAll = () => {
@@ -17,7 +17,7 @@ const ClearAll = () => {
     }
     const router = useRouter();
     const back_home = () => {
-        router.push("/");
+        router.replace("/");
     }
     const efface = (effacer: boolean) => {
         setOpen(false);

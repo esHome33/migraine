@@ -1,7 +1,7 @@
 import { Contenu } from '@/lib/types'
 import { Checkbox, FormControlLabel, ListItem, Typography } from '@mui/material';
 import React from 'react'
-import DateHeure from './dateheur';
+import DateHeure from './dateHeur';
 
 type Props = {
     ligne: Contenu;
@@ -13,22 +13,22 @@ const CalendarLine = (props: Props) => {
     const duree = content.duree;
 
     const regles = content.regles ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Règles" /> : null;
+        <FormControlLabel id='regles' control={<Checkbox defaultChecked />} label="Règles" /> : null;
 
     const ceph = content.cephalee ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Céphalée" /> : null;
+        <FormControlLabel id='ceph' control={<Checkbox defaultChecked />} label="Céphalée" /> : null;
 
     const nuit = content.nuit ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Nuit" /> : null;
+        <FormControlLabel id="nuit" control={<Checkbox defaultChecked />} label="Nuit" /> : null;
 
     const aura = content.aura ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Aura" /> : null;
+        <FormControlLabel id="aura" control={<Checkbox defaultChecked />} label="Aura" /> : null;
 
     const postdrome = content.postdrome ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Postdrome" /> : null;
+        <FormControlLabel id="postdr" control={<Checkbox defaultChecked />} label="Postdrome" /> : null;
 
     const prodrome = content.prodrome ?
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Prodrome" /> : null;
+        <FormControlLabel id="prodr" control={<Checkbox defaultChecked />} label="Prodrome" /> : null;
 
     const impact = content.impact === "I" ?
         <Typography className='text-red-800 bg-red-200 rounded-lg ml-3 px-1 font-bold w-8 h-6 text-center'>I</Typography>
@@ -40,19 +40,19 @@ const CalendarLine = (props: Props) => {
         )
 
     const t1 = (content.traitement1 > 0 && content.nom_t1 !== "") ?
-        <div className='text-xs text-blue-300 mr-1'>{`${content.nom_t1}: ${content.traitement1}`}</div>
+        <div className='text-xs text-blue-100 bg-blue-900 mr-1 border rounded-lg px-1'>{`${content.nom_t1}: ${content.traitement1}`}</div>
         : null;
 
     const t2 = (content.traitement2 > 0 && content.nom_t2 !== "") ?
-        <div className='text-xs text-violet-300 mr-1'>{`${content.nom_t2}: ${content.traitement2}`}</div>
+        <div className='text-xs text-violet-100 mr-1 border rounded-lg px-1'>{`${content.nom_t2}: ${content.traitement2}`}</div>
         : null;
 
     const t3 = (content.traitement3 > 0 && content.nom_t3 !== "") ?
-        <div className='text-xs text-blue-300 mr-1'>{`${content.nom_t3}: ${content.traitement3}`}</div>
+        <div className='text-xs text-blue-100 bg-blue-900 mr-1 border rounded-lg px-1'>{`${content.nom_t3}: ${content.traitement3}`}</div>
         : null;
 
     const t4 = (content.traitement4 > 0 && content.nom_t4 !== "") ?
-        <div className='text-xs text-violet-300 mr-1'>{`${content.nom_t4}: ${content.traitement4}`}</div>
+        <div className='text-xs text-violet-300 mr-1 border rounded-lg px-1'>{`${content.nom_t4}: ${content.traitement4}`}</div>
         : null;
 
 

@@ -124,7 +124,7 @@ const EditMedPage = () => {
     }
 
     const retourPage = () => {
-        router.push("/settings");
+        router.replace("/settings");
     }
 
     return (

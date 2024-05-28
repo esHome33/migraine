@@ -1,14 +1,15 @@
 'use client'
 
-import CalendarLine from "@/components/calendarline";
 import { Contenu } from "@/lib/types";
-import { AnalyseContent, getContenu, GetFilteredContent } from "@/lib/utils";
+import { AnalyseContent, getContenu, GetFilteredContent, MiseEnCSVContenu } from "@/lib/utils";
 import { Button, Drawer, IconButton, List, Snackbar, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Toaster } from "react-hot-toast";
 import Caldrawer from "@/components/caldrawer";
 import { useRouter } from "next/navigation";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CalendarLine from "@/components/calendarLine";
 
 
 const Calendar = () => {
@@ -36,23 +37,16 @@ const Calendar = () => {
 
 	useEffect(() => {
 		if (items) {
-
 			let resu: string = "";
-			items.map((item, index) => {
-				resu += `${index};${item.date};${item.mois};${item.aura};${item.cephalee};${item.duree};${item.impact};`
-				resu += `${item.nuit};${item.prodrome};${item.postdrome};${item.regles};`
-				resu += `${item.nom_t1};${item.traitement1};`
-				resu += `${item.nom_t2};${item.traitement2};`
-				resu += `${item.nom_t3};${item.traitement3};`
-				resu += `${item.nom_t4};${item.traitement4};`
-				resu += "\r\n";
-
+			resu += MiseEnCSVContenu(undefined);
+			items.map((contenu: Contenu) => {
+				resu += MiseEnCSVContenu(contenu);
 			});
 			data_dl.current = encodeURI("?data=" + resu);
 		}
 	}, [items]);
 
-	useEffect(() => { 
+	useEffect(() => {
 		title_dl.current = encodeURI("&title=" + filtre_s);
 	}, [filtre_s]);
 
@@ -61,9 +55,9 @@ const Calendar = () => {
 		const d = data_dl.current;
 		const t = title_dl.current;
 		const url = "/dl" + d + t;
-		setMsg_info(`url = ${url}`);
+		setMsg_info(`${url}`);
 		setOpenInfo(true);
-		//router.push(url);
+		router.push(url);
 	}
 
 	const ouvre_panel = () => {
@@ -84,12 +78,26 @@ const Calendar = () => {
 		}
 	}
 
-	const handleInfoClose = (o: object, r: string)=>{
+	const handleInfoClose = (o: object, r: string) => {
 		if (r === 'clickaway') {
 			return;
 		}
 		setOpenInfo(false);
 	}
+
+	const copieTexteURL = () => {
+		if (navigator) {
+			navigator.clipboard.writeText(msg_info);
+			setOpenInfo(false);
+		}
+
+	}
+
+	const action = (
+		<IconButton onClick={copieTexteURL}>
+			<ContentCopyIcon />
+		</IconButton>
+	);
 
 	if (!items) {
 		return (<div className="max-w-xl rounded-md mx-auto p-4">
@@ -119,10 +127,11 @@ const Calendar = () => {
 			<Snackbar
 				open={openInfo}
 				onClose={handleInfoClose}
-				message = {msg_info}
+				message={msg_info}
+				action={action}
 			/>
 
-			
+
 			<div className="sticky top-4 ml-4 h-1">
 				<IconButton onClick={ouvre_panel}
 					className="bg-orange-200 hover:bg-orange-200 h-11 w-11"
@@ -171,25 +180,26 @@ const Calendar = () => {
 							</div>
 
 						</div>
-						<div className="mx-auto text-right flex-grow-0">
-							<Button
-								onClick={faire_download}
-								variant="contained"
-								className="bg-orange-500 hover:bg-orange-400"
-							>
-								TELECHARGE
-							</Button>
+						<div className="text-right flex-grow-0 flex flex-col space-y-1">
+							<div className="w-full">
+								<Button
+									onClick={faire_download}
+									variant="contained"
+									className="bg-orange-500 hover:bg-orange-400"
+								>
+									TELECHARGE
+								</Button>
+							</div>
+							<div className="">
+								<Button
+									href="/"
+									variant="contained"
+									className="bg-orange-500 hover:bg-orange-400 w-full"
+								>
+									Retour
+								</Button>
+							</div>
 						</div>
-						<div className="mx-auto text-right flex-grow-0">
-							<Button
-								href="/"
-								variant="contained"
-								className="bg-orange-500 hover:bg-orange-400"
-							>
-								Retour
-							</Button>
-						</div>
-
 					</div>
 					<div>
 						<List className="bg-slate-700 rounded-md p-2">

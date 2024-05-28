@@ -1,6 +1,6 @@
 'use client'
 
-import MigraineItem from "@/components/migraineitem";
+import MigraineItem from "@/components/migraineItem";
 import { CLE_CONTENU, CLE_TRAITEMENTS, Contenu, Traitements } from "@/lib/types";
 import { ajouteContenu } from "@/lib/utils";
 import { Alert, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Typography } from "@mui/material";
@@ -48,7 +48,7 @@ const Suivi = () => {
         ajouteContenu(contenu);
         toast.success("ENREGISTREMENT FAIT !", { icon: '👍' });
         //console.log('contenu', contenu);
-        router.push("/");
+        router.replace("/");
       } else {
         toast.error("Rien à enregistrer", { icon: '🟥' });
       }

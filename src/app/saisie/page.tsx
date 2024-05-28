@@ -1,5 +1,5 @@
 'use client'
-import SaisieTexte from '@/components/saisietexte'
+import SaisieTexte from '@/components/saisieTexte'
 import { CLE_TRAITEMENTS, Traitement, Traitements } from '@/lib/types'
 import { Alert, Button, ButtonGroup, Typography } from '@mui/material'
 import WarningIcon from '@mui/icons-material/Warning';
@@ -28,7 +28,7 @@ const Saisie = () => {
     const go_valid = () => {
         if (tts && isValid(tts)) {
             window.localStorage.setItem(CLE_TRAITEMENTS, JSON.stringify(tts));
-            router.push("/");
+            router.replace("/");
         }
     }
 
@@ -79,7 +79,7 @@ const Saisie = () => {
     }
 
     const retourMaison = () => {
-        router.push("/");
+        router.replace("/");
     }
 
     return (

@@ -87,11 +87,11 @@ export function dummyContent(): Contenu {
 		postdrome: false,
 		prodrome: false,
 		traitement1: 0,
-		nom_t1:"",
+		nom_t1: "",
 		traitement2: 0,
-		nom_t2:"",
+		nom_t2: "",
 		traitement3: 0,
-		nom_t3:"",
+		nom_t3: "",
 		traitement4: 0,
 		nom_t4: "",
 		regles: false,
@@ -238,5 +238,292 @@ export function GetFilteredContent(filtre: string, c: Contenu[]): Contenu[] {
 			resu.push(contenu);
 		}
 	});
+	return resu;
+}
+/**
+ * type détaillé d'une ligne de CSV issu de l'URI
+ */
+type Ligne = {
+	date_jour: number;
+	date_mois: MOIS;
+	date_annee: number;
+	time: string;
+	booleens: string;
+	duree: string;
+	regles: string;
+	impact: string;
+	nuit: string;
+	traitement: string;
+};
+
+/**
+ * type du regroupement de lignes par date du mois.
+ */
+type ConteneurLigne = {
+	date_jour: number;
+	date_mois: MOIS;
+	date_annee: number;
+	lignes: Ligne[];
+};
+
+/**
+ * Récupère les données CSV de l'URI et les met sous la forme d'un calendrier de 31 jours.
+ *
+ * @param data les données csv issues de @see {@link MiseEnCSVContenu }
+ * @returns le joli calendrier csv
+ */
+export function FabriqueCalendrierCSV(
+	data: string,
+	nom_patient: string
+): string {
+	const regroup: ConteneurLigne[] = TrouveLignes(data);
+	console.log('regroupement : ', regroup);
+	let resu_csv: string = "";
+	//TODO utiliser les regroupements pour constituer 31 lignes de CSV
+	for (let i: number = 0; i < 31; i++) {
+		// regrouper les items par jour (en globalisant les traitements)
+		// créer tous les jours dans le calendrier, y compris ceux où il n'y a rien
+	}
+	return resu_csv;
+}
+
+/**
+ * il peut y avoir plusieurs traitements par jour : on va récupérer les lignes du CSV
+ * et regrouper les traitements qui sont au même jour.
+ * @param data le CSV
+ * @returns les lignes issues du CSV
+ */
+function TrouveLignes(data: string): ConteneurLigne[] {
+	let lignes: Ligne[] = [];
+	let conteneur: ConteneurLigne[] = [];
+	const m = data.split("\r\n");
+	if (m.length > 0) {
+		// analyse des lignes brutes
+		m.map((l) => {
+			const m1 = l.split(";");
+			if (m1.length > 0 && m1[0].length > 0) {
+				const ligne: Ligne = analyseLigne(m1);
+				lignes.push(ligne);
+			}
+		});
+
+		// on va saisir ces lignes dans un conteneur qui regroupe les lignes par dates
+		lignes.forEach((element) => {
+			if (conteneur.length === 0) {
+				// on saisit directement la ligne dans le conteneur qui est vide
+				let cont: ConteneurLigne = {
+					date_annee: element.date_annee,
+					date_mois: element.date_mois,
+					date_jour: element.date_jour,
+					lignes: [element],
+				};
+				conteneur.push(cont);
+			} else {
+				// le conteneur est plein. On le parcourt jusqu'à trouver la bonne date.
+				let trouve = false;
+				conteneur.forEach((c) => {
+					if (trouve) return;
+					if (
+						c.date_annee === element.date_annee &&
+						c.date_mois === element.date_mois &&
+						c.date_jour === element.date_jour
+					) {
+						c.lignes.push(element);
+						trouve = true;
+					}
+				});
+				
+				if (!trouve) {
+					// cette date ne se trouve pas dans le conteneur : 
+					// on va créer une nouvelle entrée.
+					let cont: ConteneurLigne = {
+						date_annee: element.date_annee,
+						date_mois: element.date_mois,
+						date_jour: element.date_jour,
+						lignes: [element],
+					};
+					conteneur.push(cont);
+				}
+			}
+		});
+	}
+
+	return conteneur;
+}
+
+function analyseLigne(elt: string[]): Ligne {
+	let line: Ligne;
+	// elt comporte date/heure, 4 booleens, durée, regles, impact, nuit et traitements
+	let m: MOIS;
+	let morceaux: string[] = ["", ""];
+	if (elt[0] === "DATE") {
+		m = "jan";
+		line = {
+			date_annee: Number(0),
+			date_mois: m,
+			date_jour: Number(0),
+			time: "HEURE",
+			booleens: elt[1] + ";" + elt[2] + ";" + elt[3] + ";" + elt[4] + ";",
+			duree: elt[5] + ";",
+			regles: elt[6] + ";",
+			impact: elt[7] + ";",
+			nuit: elt[8] + ";",
+			traitement: elt[9]+ ";",
+		};
+	} else {
+		m = trouveMoisS(elt[0]);
+		morceaux = elt[0].split("T");
+		const date_morceaux = morceaux[0].split("-");
+		line = {
+			date_annee: Number(date_morceaux[0]),
+			date_mois: m,
+			date_jour: Number(date_morceaux[2]),
+			time: morceaux[1],
+			booleens: elt[1] + ";" + elt[2] + ";" + elt[3] + ";" + elt[4] + ";",
+			duree: elt[5] + ";",
+			regles: elt[6] + ";",
+			impact: elt[7] + ";",
+			nuit: elt[8] + ";",
+			traitement: elt[9] + ";",
+		};
+	}
+	return line;
+}
+
+/**
+ * Met un contenu sous la forme d'une ligne de texte CSV
+ *
+ * @param item un contenu à mettre en forme de CSV
+ * @returns le contenu sous forme d'une ligne CSV (string)
+ */
+export function MiseEnCSVContenu(item: Contenu | undefined) {
+	let resu = "";
+	if (!item) {
+		resu += "DATE;";
+		resu += "PRODROME;";
+		resu += "AURA;";
+		resu += "CEPHALEE;";
+		resu += "POSTDROME;";
+		resu += "DUREE;";
+		resu += "REGLES;";
+		resu += "IMPACT;";
+		resu += "NUIT;";
+		resu += "TRAITEMENT";
+		resu += "\r\n";
+		return resu;
+	}
+
+	resu += `${item.date};`;
+	resu += item.prodrome ? "T;" : "F;";
+	resu += item.aura ? "T;" : "F;";
+	resu += item.cephalee ? "T;" : "F;";
+	resu += item.postdrome ? "T;" : "F;";
+	resu += `${item.duree};`;
+	resu += item.regles ? "T;" : "F;";
+	resu += `${item.impact};`;
+	resu += item.nuit ? "T;" : "F;";
+	const nom1 = Buffer.from(item.nom_t1, "latin1").toString();
+	const nom2 = Buffer.from(item.nom_t2, "latin1").toString();
+	const nom3 = Buffer.from(item.nom_t3, "latin1").toString();
+	const nom4 = Buffer.from(item.nom_t4, "latin1").toString();
+	if (nom1 !== "" && item.traitement1 > 0) {
+		// t1 non vide
+		resu += `${nom1}:${item.traitement1}`;
+		if (nom2 !== "" && item.traitement2 > 0) {
+			// t1 non vide et t2 non vide
+			resu += ` // ${nom2}:${item.traitement2}`;
+			if (nom3 !== "" && item.traitement3 > 0) {
+				// t1 non vide et t2 non vide et t3 non vide
+				resu += ` // ${nom3}:${item.traitement3}`;
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 non vide et t2 non vide et t3 non vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					//t4 vide
+					// t1 non vide et t2 non vide et t3 non vide
+					// on a fini
+				}
+			} else {
+				// t1 non vide et t2 non vide et t3 vide
+				if (nom4 !== "" && item.traitement4 > 0) {
+					resu += ` // ${nom4}:${item.traitement4}`;
+					// t1 non vide et t2 non vide et t3 vide et t4 non vide
+				} else {
+					// t1 non vide et t2 non vide et t3 vide et t4 vide
+				}
+			}
+		} else {
+			// t1 non vide et t2 vide
+			if (item.traitement3 > 0 && nom3 !== "") {
+				// t1 non vide et t2 vide et t3 non vide
+				resu += ` // ${nom3}:${item.traitement3}`;
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 non vide et t2 vide et t3 non vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					// t1 non vide et t2 vide et t3 non vide et t4 vide
+					// on a fini
+				}
+			} else {
+				// t1 non vide et t2 vide et t3 vide
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 non vide et t2 vide et t3 vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					// t1 non vide et t2 vide et t3 vide et t4 vide
+					// on a fini
+				}
+			}
+		}
+	} else {
+		// t1 vide
+		if (nom2 !== "" && item.traitement2 > 0) {
+			// t1 vide et t2 non vide
+			resu += `${nom2}:${item.traitement2}`;
+			if (nom3 !== "" && item.traitement3 > 0) {
+				// t1 vide et t2 non vide et t3 non vide
+				resu += ` // ${nom3}:${item.traitement3}`;
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 vide et t2 non vide et t3 non vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					// t1 vide et t2 non vide et t3 non vide et t4 vide
+					// on a fini
+				}
+			} else {
+				// t1 vide et t2 non vide et t3 vide
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 vide et t2 non vide et t3 vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					// t1 vide et t2 non vide et t3 vide et t4 vide
+					// fini !
+				}
+			}
+		} else {
+			// t1 vide et t2 vide
+			if (nom3 !== "" && item.traitement3 > 0) {
+				// t1 vide et t2 vide et t3 non vide
+				resu += `${nom3}:${item.traitement3}`;
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 vide et t2 vide et t3 non vide et t4 non vide
+					resu += ` // ${nom4}:${item.traitement4}`;
+				} else {
+					// t1 vide et t2 vide et t3 non vide et t4 vide
+					// fini !
+				}
+			} else {
+				// t1 vide et t2 vide et t3 vide
+				if (nom4 !== "" && item.traitement4 > 0) {
+					// t1 vide et t2 vide et t3 vide et t4 non vide
+					resu += `${nom4}:${item.traitement4}`;
+				} else {
+					// t1 vide et t2 vide et t3 vide et t4 vide : tout est vide !!
+					resu += "//";
+				}
+			}
+		}
+	}
+	resu += "\r\n";
 	return resu;
 }
