@@ -15,8 +15,8 @@ const DLPage = () => {
 
     const createAndDownloadFile = () => {
         if (data) {
-            const data_traitee = FabriqueCalendrierCSV(data, "Etienne");
-            const datacsv = new Blob([data], { type: 'text/csv' });
+            const data_traitee = FabriqueCalendrierCSV(data, "Etienne", title);
+            const datacsv = new Blob([data_traitee], { type: 'text/csv' });
             const url = window.URL.createObjectURL(datacsv);
             const link = document.createElement('a');
             link.href = url;

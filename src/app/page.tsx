@@ -52,8 +52,8 @@ export default function Home() {
           </Button>
         </CardActions>
       </Card>
-      <div className="text-sm text-orange-700">
-        version 1.2
+      <div className="text-sm italic font-black text-orange-300">
+        version 1.3
       </div>
     </main>
   );
