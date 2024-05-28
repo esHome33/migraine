@@ -3,7 +3,7 @@ type Props = {
     date: string;
 }
 
-const DateHeur = ({ date }: Props) => {
+const Dateheur = ({ date }: Props) => {
 
     const m = date.split("T")
     const la_date = m[0];
@@ -16,4 +16,4 @@ const DateHeur = ({ date }: Props) => {
     )
 }
 
-export default DateHeur;
+export default Dateheur;

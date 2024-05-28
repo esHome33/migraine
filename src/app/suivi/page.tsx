@@ -1,6 +1,6 @@
 'use client'
 
-import MigraineItem from "@/components/migraineItem";
+import MigraineItem from "@/components/migraineitem";
 import { CLE_CONTENU, CLE_TRAITEMENTS, Contenu, Traitements } from "@/lib/types";
 import { ajouteContenu } from "@/lib/utils";
 import { Alert, Box, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, Typography } from "@mui/material";

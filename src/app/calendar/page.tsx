@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast";
 import Caldrawer from "@/components/caldrawer";
 import { useRouter } from "next/navigation";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import CalendarLine from "@/components/calendarLine";
+import Calendarline from "@/components/calendarline";
 
 
 const Calendar = () => {
@@ -205,7 +205,7 @@ const Calendar = () => {
 						<List className="bg-slate-700 rounded-md p-2">
 							{items.map((it, index) => {
 								return (
-									<CalendarLine ligne={it} key={index} />
+									<Calendarline ligne={it} key={index} />
 								)
 							})}
 						</List>

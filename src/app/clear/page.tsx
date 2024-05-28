@@ -7,7 +7,7 @@ import { CLE_CONTENU, CLE_TRAITEMENTS } from "@/lib/types";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import ConfirmationDialog from "@/components/confirmationDialog";
+import ConfirmationDialog from "@/components/confirmationdialog";
 
 
 const ClearAll = () => {

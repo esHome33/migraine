@@ -8,7 +8,7 @@ type Props = {
     open: boolean;
 }
 
-const ConfirmationDialog = ({ action, open }: Props) => {
+const Confirmationdialog = ({ action, open }: Props) => {
 
     const click_efface = () => {
         action(true);
@@ -50,4 +50,4 @@ const ConfirmationDialog = ({ action, open }: Props) => {
     )
 }
 
-export default ConfirmationDialog
+export default Confirmationdialog

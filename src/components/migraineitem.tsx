@@ -12,7 +12,7 @@ type Props = {
 }
 
 
-const MigraineItem = (props: Props) => {
+const Migraineitem = (props: Props) => {
 
     const myTraitements = props.traitements;
 
@@ -344,4 +344,4 @@ const MigraineItem = (props: Props) => {
 }
 
 
-export default MigraineItem
+export default Migraineitem

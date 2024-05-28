@@ -12,7 +12,7 @@ type Props = {
     sauver: (t: Traitement) => void;
 }
 
-const SaisieTexte = ({ sauver, traitement, id }: Props) => {
+const Saisietexte = ({ sauver, traitement, id }: Props) => {
 
     let myvalid: boolean = false;
     let myname: string = "";
@@ -104,4 +104,4 @@ const SaisieTexte = ({ sauver, traitement, id }: Props) => {
     )
 }
 
-export default SaisieTexte
+export default Saisietexte

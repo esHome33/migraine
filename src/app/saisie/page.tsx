@@ -1,5 +1,5 @@
 'use client'
-import SaisieTexte from '@/components/saisieTexte'
+import SaisieTexte from '@/components/saisietexte'
 import { CLE_TRAITEMENTS, Traitement, Traitements } from '@/lib/types'
 import { Alert, Button, ButtonGroup, Typography } from '@mui/material'
 import WarningIcon from '@mui/icons-material/Warning';

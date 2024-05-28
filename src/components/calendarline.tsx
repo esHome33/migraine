@@ -1,13 +1,13 @@
 import { Contenu } from '@/lib/types'
 import { Checkbox, FormControlLabel, ListItem, Typography } from '@mui/material';
 import React from 'react'
-import DateHeure from './dateHeur';
+import Dateheur from './dateheur';
 
 type Props = {
     ligne: Contenu;
 }
 
-const CalendarLine = (props: Props) => {
+const Calendarline = (props: Props) => {
     const content = props.ligne;
 
     const duree = content.duree;
@@ -62,7 +62,7 @@ const CalendarLine = (props: Props) => {
             <ListItem className='rounded-md border-blue-400 border' >
                 <div className='flex flex-col'>
                     <div className='flex flex-col flex-wrap sm:flex-row'>
-                        <DateHeure date={content.date} />
+                        <Dateheur date={content.date} />
                         <span className='hidden sm:block sm:mx-1'>-</span>
                         <span className='flex flex-row'>impact {impact}</span>
                         <span className='hidden sm:block sm:mx-1'>-</span>
@@ -80,4 +80,4 @@ const CalendarLine = (props: Props) => {
     )
 }
 
-export default CalendarLine
+export default Calendarline
