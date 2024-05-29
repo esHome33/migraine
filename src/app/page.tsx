@@ -53,7 +53,7 @@ export default function Home() {
         </CardActions>
       </Card>
       <div className="text-sm italic font-black text-orange-300">
-        version 1.3.1
+        version 1.3.2
       </div>
     </main>
   );

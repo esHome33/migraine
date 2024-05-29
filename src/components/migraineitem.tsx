@@ -26,7 +26,7 @@ const Migraineitem = (props: Props) => {
             if (m2.length === 3) {
                 const h1 = heure.split(":");
                 if (h1.length === 3) {
-                    const month_obtained = d.getMonth()+1;
+                    const month_obtained = d.getMonth() + 1;
                     let mois: string;
                     if (month_obtained.toString().length === 1) {
                         mois = `0${month_obtained}`;
@@ -85,9 +85,9 @@ const Migraineitem = (props: Props) => {
             duree: duree,
             impact: impact,
             traitement1: qte1,
-            nom_t1:myTraitements.tt1.nom,
+            nom_t1: myTraitements.tt1.nom,
             traitement2: qte2,
-            nom_t2:myTraitements.tt2.nom,
+            nom_t2: myTraitements.tt2.nom,
             traitement3: qte3,
             nom_t3: myTraitements.tt3.nom,
             traitement4: qte4,
@@ -139,7 +139,7 @@ const Migraineitem = (props: Props) => {
         props.validate(cree_contenu("date", f, false, 0, "L"));
     }
 
-    
+
     let cn: string = "bg-[#a0beca] rounded-lg h-12 w-44 px-2 mt-2 border border-[#c3e9f8]";
     const [couleur, setCouleur] = useState<string>(cn);
 
@@ -154,13 +154,13 @@ const Migraineitem = (props: Props) => {
             cn = "bg-[#fcffbf] rounded-lg h-12 w-44 px-2 mt-2";
             setCouleur(cn);
             props.validate(cree_contenu("impact", "", false, 0, "M"));
-        } else if(impact === "M") {
+        } else if (impact === "M") {
             setImpact("I");
             cn = "bg-[#ffdebf] rounded-lg h-12 w-44 px-2 mt-2";
             setCouleur(cn);
             props.validate(cree_contenu("impact", "", false, 0, "I"));
-        } else {            
-            setImpact("L");            
+        } else {
+            setImpact("L");
             cn = "bg-[#a7ff9f] rounded-lg h-12 w-44 px-2 mt-2";
             setCouleur(cn);
             props.validate(cree_contenu("impact", "", false, 0, "L"));
@@ -229,7 +229,7 @@ const Migraineitem = (props: Props) => {
             return `Impact : ${trad}`;
         }
     }
-    
+
 
 
     return (
@@ -237,6 +237,7 @@ const Migraineitem = (props: Props) => {
 
             <div className='flex flex-col sm:flex-row space-y-2 sm:space-x-3'>
                 <FormControlLabel
+                    className='mt-1'
                     control={
                         <Checkbox
                             checked={prodrome1}
@@ -319,7 +320,9 @@ const Migraineitem = (props: Props) => {
             </div>
 
             <div className='flex flex-col sm:flex-row space-y-2 sm:space-x-3 align-bottom justify-start'>
-                <Typography className='mt-4 mr-2'>Traitements</Typography>
+                <Typography className='mt-4 mr-2 underline italic text-sm  font-bold'>
+                    Traitements :
+                </Typography>
 
                 <Traitem
                     traitement={myTraitements.tt1}
@@ -343,8 +346,8 @@ const Migraineitem = (props: Props) => {
                 />
             </div>
 
-            <div className='flex flex-col sm:flex-row space-y-2 sm:space-x-3 align-bottom justify-start'>
-                <Typography className='mt-4'>
+            <div className='flex flex-col sm:flex-row space-y-2 sm:space-x-3 align-middle justify-start'>
+                <Typography className='sm:mt-4 underline italic text-sm font-bold'>
                     date :
                 </Typography>
                 <input

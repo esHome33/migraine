@@ -13,22 +13,22 @@ const Calendarline = (props: Props) => {
     const duree = content.duree;
 
     const regles = content.regles ?
-        <FormControlLabel id='regles' control={<Checkbox defaultChecked />} label="Règles" /> : null;
+        <FormControlLabel id='regles' control={<Checkbox value={true} checked/>} label="Règles" sx={{pointerEvents:"auto"}}/> : null;
 
     const ceph = content.cephalee ?
-        <FormControlLabel id='ceph' control={<Checkbox defaultChecked />} label="Céphalée" /> : null;
+        <FormControlLabel id='ceph' control={<Checkbox value={true} checked />} label="Céphalée" sx={{ pointerEvents: "auto" }} /> : null;
 
     const nuit = content.nuit ?
-        <FormControlLabel id="nuit" control={<Checkbox defaultChecked />} label="Nuit" /> : null;
+        <FormControlLabel id="nuit" control={<Checkbox value={true} checked />} label="Nuit" sx={{ pointerEvents: "auto" }} /> : null;
 
     const aura = content.aura ?
-        <FormControlLabel id="aura" control={<Checkbox defaultChecked />} label="Aura" /> : null;
+        <FormControlLabel id="aura" control={<Checkbox value={true} checked />} label="Aura" sx={{ pointerEvents: "auto" }} /> : null;
 
     const postdrome = content.postdrome ?
-        <FormControlLabel id="postdr" control={<Checkbox defaultChecked />} label="Postdrome" /> : null;
+        <FormControlLabel id="postdr" control={<Checkbox value={true} checked />} label="Postdrome" sx={{ pointerEvents: "auto" }} /> : null;
 
     const prodrome = content.prodrome ?
-        <FormControlLabel id="prodr" control={<Checkbox defaultChecked />} label="Prodrome" /> : null;
+        <FormControlLabel id="prodr" control={<Checkbox value={true} checked />} label="Prodrome" sx={{ pointerEvents: "auto" }} /> : null;
 
     const impact = content.impact === "I" ?
         <Typography className='text-red-800 bg-red-200 rounded-lg ml-2 px-1 font-bold w-8 h-6 text-center'>I</Typography>

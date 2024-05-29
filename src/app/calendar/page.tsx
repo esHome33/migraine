@@ -180,7 +180,7 @@ const Calendar = () => {
 							</div>
 
 						</div>
-						<div className="text-right flex-grow-0 flex flex-col space-y-1">
+						<div className="text-right flex-grow-0 flex flex-col space-y-2">
 							<div className="w-full">
 								<Button
 									onClick={faire_download}
@@ -201,7 +201,7 @@ const Calendar = () => {
 							</div>
 						</div>
 					</div>
-					<div>
+					<div className="-ml-12">
 						<List className="bg-slate-700 rounded-md p-2">
 							{items.map((it, index) => {
 								return (
