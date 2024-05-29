@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between p-20">
       <div className="flex flex-col md:flex-row space-y-2 align-center justify-center text-center">
         <div className="my-auto pt-2">
           <Typography variant="h4">
@@ -17,18 +17,18 @@ export default function Home() {
             <IconButton
               className="bg-slate-300 hover:bg-orange-300 h-10 align-top"
             >
-              <Link href={"/settings"} className=""><SettingsApplicationsIcon sx={{ color: "#FF6600", height:'60px' }} /></Link>
+              <Link href={"/settings"} className=""><SettingsApplicationsIcon sx={{ color: "#FF6600", height: '60px' }} /></Link>
             </IconButton>
           </Tooltip>
         </div>
       </div>
-      <Card sx={{ minWidth: "400px" }}>
+      <Card sx={{ minWidth: "340px" }}>
         <CardContent>
           <Typography className="text-center" fontFamily={"monospace"} variant="h5">
-            Calendriers disponibles
+            Calendriers
           </Typography>
           <Typography variant="body2" className="text-center">
-            impression des calendriers de données disponibles
+            impression des calendriers de suivi
           </Typography>
         </CardContent>
         <CardActions>
@@ -37,7 +37,7 @@ export default function Home() {
           </Button>
         </CardActions>
       </Card>
-      <Card sx={{ minWidth: "400px" }}>
+      <Card sx={{ minWidth: "340px" }}>
         <CardContent>
           <Typography className="text-center" fontFamily={"monospace"} variant="h5">
             Saisie migraine
