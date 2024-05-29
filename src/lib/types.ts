@@ -15,7 +15,7 @@ export type MOIS =
 	| "nov"
 	| "dec";
 
-export type IMPACT = "L" | "M" | "I";
+export type IMPACT = "L" | "M" | "I" | "";
 
 export type Contenu = {
 	date: string;

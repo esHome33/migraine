@@ -31,12 +31,15 @@ const Calendarline = (props: Props) => {
         <FormControlLabel id="prodr" control={<Checkbox defaultChecked />} label="Prodrome" /> : null;
 
     const impact = content.impact === "I" ?
-        <Typography className='text-red-800 bg-red-200 rounded-lg ml-3 px-1 font-bold w-8 h-6 text-center'>I</Typography>
+        <Typography className='text-red-800 bg-red-200 rounded-lg ml-2 px-1 font-bold w-8 h-6 text-center'>I</Typography>
         :
         (content.impact === "L" ?
-            <Typography className='text-yellow-900 bg-yellow-200 rounded-lg ml-3 px-1 font-bold w-8 h-6 text-center'>L</Typography>
+            <Typography className='text-yellow-900 bg-yellow-200 rounded-lg ml-2 px-1 font-bold w-8 h-6 text-center'>L</Typography>
             :
-            <Typography className='text-orange-900 bg-orange-200 rounded-lg ml-3 px-1 font-bold w-8 h-6 text-center'>M</Typography>
+            (content.impact === "M") ?
+                <Typography className='text-orange-900 bg-orange-200 rounded-lg ml-2 px-1 font-bold w-8 h-6 text-center'>M</Typography>
+                :
+                <Typography className='text-blue-300 bg-blue-800 rounded-lg ml-2 px-1 text-xs w-8 h-6 text-center pt-1'>sans</Typography>
         )
 
     const t1 = (content.traitement1 > 0 && content.nom_t1 !== "") ?

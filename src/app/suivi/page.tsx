@@ -62,12 +62,18 @@ const Suivi = () => {
     const c2 = contenu.traitement2 === 0;
     const c3 = contenu.traitement3 === 0;
     const c4 = contenu.traitement4 === 0;
+    const regles = contenu.regles;
     if (c1 && c2 && c3 && c4) {
-      setTouched(false);
+      if (regles) {
+        // l'indication des règles 
+        setContenu(contenu);
+        setTouched(true);
+      } else {
+        setTouched(false);
+      }
     } else {
       setContenu(contenu);
       setTouched(true);
-      //console.log("contenu mis dans le state", contenu);
     }
   }
 

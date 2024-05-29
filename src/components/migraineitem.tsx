@@ -58,11 +58,11 @@ const Migraineitem = (props: Props) => {
     const [_t4, setT4] = useState<boolean>(false);
     const [qte4, setQte4] = useState<number>(0);
     const [duree, setDuree] = useState<string>("2 h");
-    const [impact, setImpact] = useState<IMPACT>("M");
+    const [impact, setImpact] = useState<IMPACT>("");
     const [datee, setDatee] = useState<string>(madate);
 
     /**
-     * décrit l'impact I, L ou M
+     * décrit l'impact I, L ou M ou sans impact
      * @returns une description de l'impact
     */
     const traduitImpact = (): string => {
@@ -70,8 +70,10 @@ const Migraineitem = (props: Props) => {
             return "INTENSE";
         } else if (impact === "L") {
             return "LEGER";
-        } else {
+        } else if (impact === "M") {
             return "MODERE";
+        } else {
+            return "sans impact"
         }
     }
 
@@ -138,25 +140,30 @@ const Migraineitem = (props: Props) => {
     }
 
     
-    let cn: string = "bg-[#a7ff9f] rounded-lg h-12 w-44 px-2 mt-2";
+    let cn: string = "bg-[#a0beca] rounded-lg h-12 w-44 px-2 mt-2 border border-[#c3e9f8]";
     const [couleur, setCouleur] = useState<string>(cn);
 
     const modifieImpact = () => {
         if (impact === "I") {
-            setImpact("L");
-            cn = "bg-[#a7ff9f] rounded-lg h-12 w-44 px-2 mt-2";
+            setImpact("");
+            cn = "bg-[#a0beca] rounded-lg h-12 w-44 px-2 mt-2 border border-[#c3e9f8]";
             setCouleur(cn);
-            props.validate(cree_contenu("impact", "", false, 0, "L"));
+            props.validate(cree_contenu("impact", "", false, 0, ""));
         } else if (impact === "L") {
             setImpact("M");
             cn = "bg-[#fcffbf] rounded-lg h-12 w-44 px-2 mt-2";
             setCouleur(cn);
             props.validate(cree_contenu("impact", "", false, 0, "M"));
-        } else {
+        } else if(impact === "M") {
             setImpact("I");
             cn = "bg-[#ffdebf] rounded-lg h-12 w-44 px-2 mt-2";
             setCouleur(cn);
             props.validate(cree_contenu("impact", "", false, 0, "I"));
+        } else {            
+            setImpact("L");            
+            cn = "bg-[#a7ff9f] rounded-lg h-12 w-44 px-2 mt-2";
+            setCouleur(cn);
+            props.validate(cree_contenu("impact", "", false, 0, "L"));
         }
     }
 
@@ -188,7 +195,7 @@ const Migraineitem = (props: Props) => {
     }
 
     const enreg_traitement = (numero: number, check: boolean, qte: number | "") => {
-        console.log(`enreg de T${numero} : ${check} qté ${qte}`);
+        //console.log(`enreg de T${numero} : ${check} qté ${qte}`);
         let qte_enregistree: number;
         if (qte === "") {
             qte_enregistree = 0;
@@ -214,6 +221,15 @@ const Migraineitem = (props: Props) => {
         }
     }
 
+    const impactUI = () => {
+        const trad = traduitImpact();
+        if (impact === "") {
+            return trad;
+        } else {
+            return `Impact : ${trad}`;
+        }
+    }
+    
 
 
     return (
@@ -274,7 +290,7 @@ const Migraineitem = (props: Props) => {
                     className={couleur}
                 >
                     <Typography>
-                        Impact:  {traduitImpact()}
+                        {impactUI()}
                     </Typography>
                 </button>
 

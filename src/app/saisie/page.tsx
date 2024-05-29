@@ -32,7 +32,6 @@ const Saisie = () => {
         }
     }
 
-
     useEffect(() => {
         const t = window.localStorage.getItem(CLE_TRAITEMENTS);
         if (t) {
@@ -45,7 +44,6 @@ const Saisie = () => {
     }, []);
     
     const valideTraitement = (t:Traitement) => {
-
         const traitement_name:string = t.nom;
         const isvalidated: boolean = t.valide;
         const numero:number = t.id;
@@ -53,8 +51,6 @@ const Saisie = () => {
             setError(true);
             return;
         }
-
-        
         
         if (tts) {
             let new_tts:Traitements = {
