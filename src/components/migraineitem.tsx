@@ -26,7 +26,7 @@ const Migraineitem = (props: Props) => {
             if (m2.length === 3) {
                 const h1 = heure.split(":");
                 if (h1.length === 3) {
-                    const month_obtained = d.getMonth();
+                    const month_obtained = d.getMonth()+1;
                     let mois: string;
                     if (month_obtained.toString().length === 1) {
                         mois = `0${month_obtained}`;
@@ -37,7 +37,7 @@ const Migraineitem = (props: Props) => {
                     console.log("***");
                     return resu;
                 } else throw new Error(`PB split : avec cette heure ${heure}`);
-            } else throw new Error(`PB split - avec cette date ${date}`);
+            } else throw new Error(`PB split / avec cette date ${date}`);
         } else throw new Error(`PB avec cette date ${ds}`);
 
     }
