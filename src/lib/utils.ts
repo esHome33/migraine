@@ -588,7 +588,7 @@ export function FabriqueCalendrierCSV(
 		regroup[0].lignes[0],
 		0,
 		undefined,
-		nom_patient
+		"PATIENT"
 	);
 	for (let i: number = 1; i <= 31; i++) {
 		const lgs = trouveLigneDujourDansContenu(regroup, i);
