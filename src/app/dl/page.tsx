@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import toast, { Toaster } from 'react-hot-toast';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { FabriqueCalendrierCSV } from '@/lib/utils';
+import { CLE_PATIENT } from '@/lib/types';
 
 const DLPage = () => {
 
@@ -13,9 +14,23 @@ const DLPage = () => {
     const title = sp.get('title');
     const router = useRouter();
 
+    const litNomPatient = () => {
+        if (window) {
+            const patient = window.localStorage.getItem(CLE_PATIENT);
+            if (!patient) {
+                return "NOM PATIENT";
+            } else {
+                return patient;
+            }
+        } else {
+            return "NONAME";
+        }
+    }
+
     const createAndDownloadFile = () => {
         if (data) {
-            const data_traitee = FabriqueCalendrierCSV(data, "Etienne", title);
+            const nom = litNomPatient();
+            const data_traitee = FabriqueCalendrierCSV(data, nom, title);
             const datacsv = new Blob([data_traitee], { type: 'text/csv' });
             const url = window.URL.createObjectURL(datacsv);
             const link = document.createElement('a');

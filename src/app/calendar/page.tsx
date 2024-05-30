@@ -1,7 +1,7 @@
 'use client'
 
-import { Contenu } from "@/lib/types";
-import { AnalyseContent, getContenu, GetFilteredContent, MiseEnCSVContenu } from "@/lib/utils";
+import { CLE_PATIENT, Contenu } from "@/lib/types";
+import { AnalyseContent, FabriqueCalendrierCSV, getContenu, GetFilteredContent, MiseEnCSVContenu } from "@/lib/utils";
 import { Button, Drawer, IconButton, List, Snackbar, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
@@ -13,6 +13,8 @@ import Calendarline from "@/components/calendarline";
 
 
 const Calendar = () => {
+
+	const first_version = false;
 
 	const [items_init, setItems_init] = useState<Contenu[] | undefined>(undefined);
 	const [items, setItems] = useState<Contenu[] | undefined>(undefined);
@@ -42,22 +44,56 @@ const Calendar = () => {
 			items.map((contenu: Contenu) => {
 				resu += MiseEnCSVContenu(contenu);
 			});
-			data_dl.current = encodeURI("?data=" + resu);
+			if (first_version) {
+				data_dl.current = encodeURI("?data=" + resu);
+			} else {
+				data_dl.current = resu;
+			}
 		}
-	}, [items]);
+	}, [items, first_version]);
 
 	useEffect(() => {
-		title_dl.current = encodeURI("&title=" + filtre_s);
-	}, [filtre_s]);
+		if (first_version) {
+			title_dl.current = encodeURI("&title=" + filtre_s);
+		} else {
+			title_dl.current = filtre_s;
+		}
+	}, [filtre_s,first_version]);
 
+
+	const litNomPatient = () => {
+		if (window) {
+			const patient = window.localStorage.getItem(CLE_PATIENT);
+			if (!patient) {
+				return "NOM PATIENT";
+			} else {
+				return patient;
+			}
+		} else {
+			return "NONAME";
+		}
+	}
 
 	const faire_download = () => {
-		const d = data_dl.current;
-		const t = title_dl.current;
-		const url = "/dl" + d + t;
-		setMsg_info(`${url}`);
-		setOpenInfo(true);
-		router.push(url);
+		if (first_version) {
+			const d = data_dl.current;
+			const t = title_dl.current;
+			const url = "/dl" + d + t;
+			setMsg_info(`${url}`);
+			setOpenInfo(true);
+			router.push(url);
+		} else {
+			const nom = litNomPatient();
+			const data_traitee = FabriqueCalendrierCSV(data_dl.current, nom, title_dl.current);
+			const datacsv = new Blob([data_traitee], { type: 'text/csv' });
+			const url = window.URL.createObjectURL(datacsv);
+			const link = document.createElement('a');
+			link.href = url;
+			link.setAttribute('download', `${title_dl.current}.csv`);
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
 	}
 
 	const ouvre_panel = () => {

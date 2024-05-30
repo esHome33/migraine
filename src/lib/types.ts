@@ -1,5 +1,6 @@
 export const CLE_CONTENU = "mig_content";
 export const CLE_TRAITEMENTS = "mig_trt";
+export const CLE_PATIENT = "pat_name";
 
 export type MOIS =
 	| "jan"

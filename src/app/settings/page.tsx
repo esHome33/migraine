@@ -1,10 +1,43 @@
-import { IconButton, Typography } from '@mui/material'
+'use client';
+import { IconButton, TextField, Typography } from '@mui/material'
 import TuneIcon from '@mui/icons-material/Tune';
+import { useEffect, useState } from 'react';
+import { CLE_PATIENT } from '@/lib/types';
+import toast, { Toaster } from 'react-hot-toast';
 
 const SettingsPage = () => {
+
+
+    const getNomPatient = () => {
+        return window.localStorage.getItem(CLE_PATIENT);
+    }
+
+    const [nom, setNom] = useState<string>("");
+
+    useEffect(() => {
+        if (window) {
+            const nom = getNomPatient()
+            if (nom) {
+                setNom(nom);
+            }
+        }
+    },[])
+
+    const saisitNom = (nom:string) => {
+        if (window) {
+            if (nom === "") {
+                window.localStorage.removeItem(CLE_PATIENT);
+            } else {
+                window.localStorage.setItem(CLE_PATIENT, nom);
+            }
+            setNom(nom);
+        }
+    }
+
     return (
         <div className='max-w-2xl mx-auto mt-4 p-2 h-dvh rounded bg-slate-900'>
-            <div className='flex flex-col space-y-6  text-justify p-1'>
+            <Toaster />
+            <div className='flex flex-col space-y-2 text-justify p-2'>
                 <Typography variant='h4'>Aide et réglages</Typography>
                 <Typography variant='body1'>Cette appli vous permet de suivre les migraines, la date de survenue,
                     l&apos;environnement et la médication.
@@ -32,7 +65,7 @@ const SettingsPage = () => {
                 </div>
                 <hr className='bg-orange-600 h-1 w-full' />
             </div>
-            <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
+            <div className='flex flex-row space-x-4 mt-3 align-baseline p-2'>
                 <Typography
                     variant='body1'
                     className='text-orange-200 font-bold'
@@ -46,18 +79,22 @@ const SettingsPage = () => {
                 </IconButton>
             </div>
 
-            <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
+            <div className='flex flex-row space-x-4 mt-3 align-baseline p-2'>
                 <Typography
-                    variant='body1'
-                    className='text-orange-200 font-bold'
+                    variant='body2'
+                    className='text-orange-200 font-bold mt-3'
                 >
-                    Edition des enregistrements (à venir) :
+                    Nom du patient :
                 </Typography>
-                <IconButton
-                    href=''
-                    className='text-orange-500 -mt-1 bg-orange-200 hover:bg-orange-600 hover:text-orange-100 h-10 w-10'>
-                    <TuneIcon />
-                </IconButton>
+                <TextField
+                    size='small'
+                    variant='filled'
+                    label="Nom patient"
+                    color='success'
+                    className='max-w-sm bg-slate-400 text-orange-800 rounded-md'
+                    value={nom}
+                    onChange={(e) => { e.preventDefault();  saisitNom(e.target.value)}}
+                />
 
             </div>
             <div className='flex flex-row space-x-4 mt-8 align-baseline p-2'>
