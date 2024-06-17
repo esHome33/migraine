@@ -3,6 +3,8 @@ import { IconButton, TextField, Typography } from '@mui/material'
 import TuneIcon from '@mui/icons-material/Tune';
 import { useEffect, useState } from 'react';
 import { CLE_PATIENT } from '@/lib/types';
+import Link from 'next/link';
+import HomeIcon from '@mui/icons-material/Home';
 
 const SettingsPage = () => {
 
@@ -36,7 +38,18 @@ const SettingsPage = () => {
     return (
         <div className='max-w-2xl mx-auto mt-4 p-2 h-dvh rounded bg-slate-900'>
             <div className='flex flex-col space-y-2 text-justify p-2'>
-                <Typography variant='h4'>Aide et réglages</Typography>
+                <div
+                    className=' flex flex-row justify-evenly align-bottom'
+                >
+                    <Typography variant='h4'>Aide et réglages</Typography>
+                    <Link href={"/"}
+                        className='h-11 w-11 mt-1 flex rounded-full border border-white justify-center'
+                    >
+                        <HomeIcon
+                            className='my-auto'
+                        />
+                    </Link>
+                </div>
                 <Typography variant='body1'>Cette appli vous permet de suivre les migraines, la date de survenue,
                     l&apos;environnement et la médication.
                 </Typography>
