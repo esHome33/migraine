@@ -7,14 +7,11 @@ import { useEffect, useRef, useState } from "react";
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import { Toaster } from "react-hot-toast";
 import Caldrawer from "@/components/caldrawer";
-import { useRouter } from "next/navigation";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import Calendarline from "@/components/calendarline";
 
 
 const Calendar = () => {
-
-	const first_version = false;
 
 	const [items_init, setItems_init] = useState<Contenu[] | undefined>(undefined);
 	const [items, setItems] = useState<Contenu[] | undefined>(undefined);
@@ -27,7 +24,6 @@ const Calendar = () => {
 	let data_dl = useRef<string>("?data=");
 	let title_dl = useRef<string>("&title=X");
 
-	const router = useRouter();
 
 	useEffect(() => {
 		const c = getContenu();
@@ -44,21 +40,13 @@ const Calendar = () => {
 			items.map((contenu: Contenu) => {
 				resu += MiseEnCSVContenu(contenu);
 			});
-			if (first_version) {
-				data_dl.current = encodeURI("?data=" + resu);
-			} else {
-				data_dl.current = resu;
-			}
+			data_dl.current = resu;
 		}
-	}, [items, first_version]);
+	}, [items]);
 
 	useEffect(() => {
-		if (first_version) {
-			title_dl.current = encodeURI("&title=" + filtre_s);
-		} else {
-			title_dl.current = filtre_s;
-		}
-	}, [filtre_s,first_version]);
+		title_dl.current = filtre_s;
+	}, [filtre_s]);
 
 
 	const litNomPatient = () => {
@@ -75,25 +63,16 @@ const Calendar = () => {
 	}
 
 	const faire_download = () => {
-		if (first_version) {
-			const d = data_dl.current;
-			const t = title_dl.current;
-			const url = "/dl" + d + t;
-			setMsg_info(`${url}`);
-			setOpenInfo(true);
-			router.push(url);
-		} else {
-			const nom = litNomPatient();
-			const data_traitee = FabriqueCalendrierCSV(data_dl.current, nom, title_dl.current);
-			const datacsv = new Blob([data_traitee], { type: 'text/csv' });
-			const url = window.URL.createObjectURL(datacsv);
-			const link = document.createElement('a');
-			link.href = url;
-			link.setAttribute('download', `${title_dl.current}.csv`);
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-		}
+		const nom = litNomPatient();
+		const data_traitee = FabriqueCalendrierCSV(data_dl.current, nom, title_dl.current);
+		const datacsv = new Blob([data_traitee], { type: 'text/csv' });
+		const url = window.URL.createObjectURL(datacsv);
+		const link = document.createElement('a');
+		link.href = url;
+		link.setAttribute('download', `${title_dl.current}.csv`);
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	}
 
 	const ouvre_panel = () => {

@@ -12,8 +12,6 @@ const Saisie = () => {
     const [tts, setTts] = useState<Traitements | undefined>(undefined);
     const [error, setError] = useState<boolean>(false);
 
-
-
     const isValid = (t: Traitements) => {
         // au moins un des traitements doit être validés
         const v1 = t.tt1.valide && t.tt1.nom.length > 0;
